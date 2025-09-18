@@ -1,5 +1,6 @@
 import { Outlet, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
+import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools'
 import { TanstackDevtools } from '@tanstack/react-devtools'
 
 export const Route = createRootRoute({
@@ -15,6 +16,10 @@ export const Route = createRootRoute({
             name: 'Tanstack Router',
             render: <TanStackRouterDevtoolsPanel />,
           },
+          {
+            name: 'Tanstack Query',
+            render : <ReactQueryDevtoolsPanel/>
+          }
         ]}
       />
     </>
