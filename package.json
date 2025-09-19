@@ -7,11 +7,14 @@
     "start": "vite --port 3000",
     "build": "vite build && tsc",
     "serve": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "check": "pnpm exec biome check --write ./src",
+    "generate-types": "dotenv -e .env -- pnpx supabase gen types typescript --project-id \"$SUPABASE_PROJECT_ID\" > src/types/database.types.ts"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.27.0",
     "@emotion/react": "^11.14.0",
+    "@supabase/supabase-js": "^2.57.4",
     "@tanstack/react-devtools": "^0.2.2",
     "@tanstack/react-query": "^5.89.0",
     "@tanstack/react-query-devtools": "^5.89.0",
@@ -24,13 +27,16 @@
     "react-icons": "^5.5.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.2.4",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.6.1",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3",
     "@vitejs/plugin-react": "^4.3.4",
+    "dotenv-cli": "^10.0.0",
     "jsdom": "^26.0.0",
+    "supabase": "^2.40.7",
     "typescript": "^5.7.2",
     "vite": "^6.3.5",
     "vite-tsconfig-paths": "^5.1.4",
