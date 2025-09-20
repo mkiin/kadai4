@@ -33,6 +33,15 @@ export const getUserById = async (id: string) => {
   return data;
 };
 
+export const getAllUserIds = async () => {
+  const { data: result, error } = await supabase
+    .from("users")
+    .select("userId : user_id");
+
+  if (error) throw error;
+  return result;
+};
+
 type CreateUserData = {
   likeWord: string;
   name: string;
@@ -57,7 +66,7 @@ export const createUser = async (data: CreateUserData) => {
 
   // スキルが選択されている場合のみuser_skillテーブルに挿入
   if (data.skills.length > 0) {
-    const userSkillInserts = data.skills.map(skillId => ({
+    const userSkillInserts = data.skills.map((skillId) => ({
       user_id: data.likeWord,
       skill_id: Number(skillId),
     }));
