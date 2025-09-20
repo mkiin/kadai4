@@ -7,6 +7,7 @@ import { routeTree } from "./routeTree.gen";
 
 import "./styles.css";
 import { QueryClientProvider } from "@tanstack/react-query";
+import { Provider as ChakraProvider } from "@/components/ui/provider";
 import { createQueryClient } from "@/lib/query-client.ts";
 import reportWebVitals from "./reportWebVitals.ts";
 
@@ -36,7 +37,9 @@ if (rootElement && !rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
+        <ChakraProvider>
+          <RouterProvider router={router} />
+        </ChakraProvider>
       </QueryClientProvider>
     </StrictMode>,
   );
