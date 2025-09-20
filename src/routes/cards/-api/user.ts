@@ -32,3 +32,39 @@ export const getUserById = async (id: string) => {
   // データを整形する
   return data;
 };
+
+type CreateUserData = {
+  likeWord: string;
+  name: string;
+  desctiption: string;
+  skills: string[];
+  githubId?: string;
+  qiitaId?: string;
+  xId?: string;
+};
+
+export const createUser = async (data: CreateUserData) => {
+  // ユーザー情報を挿入
+  const { error: userError } = await supabase.from("users").insert({
+    user_id: data.likeWord,
+    name: data.name,
+    description: data.desctiption,
+    github_id: data.githubId,
+    qiita_id: data.qiitaId,
+    x_id: data.xId,
+  });
+  if (userError) throw userError;
+
+  // スキルが選択されている場合のみuser_skillテーブルに挿入
+  if (data.skills.length > 0) {
+    const userSkillInserts = data.skills.map(skillId => ({
+      user_id: data.likeWord,
+      skill_id: Number(skillId),
+    }));
+
+    const { error: skillError } = await supabase
+      .from("user_skill")
+      .insert(userSkillInserts);
+    if (skillError) throw skillError;
+  }
+};

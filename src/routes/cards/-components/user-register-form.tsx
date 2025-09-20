@@ -8,8 +8,10 @@ import {
   Stack,
   Textarea,
 } from "@chakra-ui/react";
+import { useNavigate } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useUserRegisterMutation } from "../-api/user-query";
 
 type UserRegisterFormData = {
   likeWord: string;
@@ -46,8 +48,15 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
     },
   });
 
-  const onSubmit = (data: UserRegisterFormData) => {
-    console.log(data);
+  const navigate = useNavigate();
+
+  const { mutateAsync: createUser, isPending: creating } =
+    useUserRegisterMutation(() => {
+      navigate({ to: "/" });
+    });
+
+  const onSubmit = async (data: UserRegisterFormData) => {
+    createUser(data);
   };
 
   // createListCollectionでコレクションを作成
@@ -87,7 +96,7 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
 
         {/* お名前 */}
         <Field.Root invalid={!!errors.name}>
-          <Field.Label htmlFor={"name"}>好きな単語</Field.Label>
+          <Field.Label htmlFor={"name"}>名前</Field.Label>
           <Input
             id="name"
             placeholder="John Doe"
@@ -227,7 +236,7 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
           colorPalette="blue"
           size="lg"
           width="full"
-          loading={isSubmitting}
+          loading={isSubmitting || creating}
           loadingText={"登録中..."}
         >
           登録
