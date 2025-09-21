@@ -1,5 +1,14 @@
+import {
+  Box,
+  Button,
+  Container,
+  Heading,
+  HStack,
+  Text,
+  VStack,
+} from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { UserRegisterForm } from "@/routes/cards/-components/user-register-form";
 import { skillsOptions } from "../-api/skill-query";
 
@@ -8,16 +17,68 @@ export const Route = createFileRoute("/cards/register/")({
   loader: ({ context }) => {
     context.queryClient.ensureQueryData(skillsOptions());
   },
-  pendingComponent: () => <div>スキルデータ取得中...</div>,
+  pendingComponent: () => (
+    <Container maxW="container.md" centerContent py="10">
+      <Text color="fg.muted">スキルデータ取得中...</Text>
+    </Container>
+  ),
 });
 
 function UserRegisterPage() {
   const { data: skills } = useSuspenseQuery(skillsOptions());
 
   return (
-    <div>
-      <div>新規名刺登録</div>
-      <UserRegisterForm skillsCollection={skills} />
-    </div>
+    <Box bg="bg.muted" minH="100vh">
+      <Container
+        maxW="container.md"
+        py={{ base: 4, sm: 6, md: 8 }}
+        px={{ base: 3, sm: 4, md: 6 }}
+      >
+        <VStack gap={{ base: 4, sm: 6, md: 8 }} align="stretch">
+          <Box textAlign="center">
+            <HStack
+              justify="space-between"
+              align="center"
+              mb={{ base: 2, sm: 4 }}
+            >
+              <Link to="/">
+                <Button
+                  variant="ghost"
+                  size={{ base: "sm", sm: "md" }}
+                  colorPalette="gray"
+                >
+                  ← ホーム
+                </Button>
+              </Link>
+              <Box flex="1" />
+            </HStack>
+            <Heading
+              size={{ base: "lg", sm: "xl" }}
+              mb={{ base: 2, sm: 3 }}
+              lineHeight="1.2"
+            >
+              新規名刺登録
+            </Heading>
+            <Text
+              color="fg.muted"
+              fontSize={{ base: "sm", sm: "md" }}
+              lineHeight="1.5"
+              px={{ base: 2, sm: 0 }}
+            >
+              あなたの情報を入力して、名刺を作成しましょう
+            </Text>
+          </Box>
+          <Box
+            bg="bg.panel"
+            p={{ base: 4, sm: 6, md: 8 }}
+            borderRadius="lg"
+            shadow="sm"
+            mx={{ base: -1, sm: 0 }}
+          >
+            <UserRegisterForm skillsCollection={skills} />
+          </Box>
+        </VStack>
+      </Container>
+    </Box>
   );
 }
