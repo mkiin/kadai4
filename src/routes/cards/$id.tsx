@@ -6,7 +6,7 @@ import { UserCard } from "./-components/user-card";
 export const Route = createFileRoute("/cards/$id")({
   loader: ({ params, context }) =>
     context.queryClient.ensureQueryData(userQueryOptions(params.id)),
-  component: RouteComponent,
+  component: CardDetailPage,
   pendingComponent: () => (
     <Container maxW="container.md" centerContent py="10">
       <Text color="fg.muted">名刺情報を読み込み中...</Text>
@@ -14,7 +14,7 @@ export const Route = createFileRoute("/cards/$id")({
   ),
 });
 
-function RouteComponent() {
+function CardDetailPage() {
   const { id } = Route.useParams();
 
   return (

@@ -24,7 +24,7 @@ export const Route = createFileRoute("/cards/register/")({
   ),
 });
 
-function UserRegisterPage() {
+export function UserRegisterPage() {
   const { data: skills } = useSuspenseQuery(skillsOptions());
 
   return (

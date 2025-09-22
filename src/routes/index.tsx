@@ -23,17 +23,17 @@ export const Route = createFileRoute("/")({
   component: App,
 });
 
-function App() {
+export function App() {
   const { data: userIds } = useSuspenseQuery(userIdsQueryOptions());
 
   return (
     <Box bg="bg.muted" minH="100vh">
       <Container
         maxW="container.md"
-        py={{ base: 6, sm: 8, md: 12 }}
+        py={{ base: 6, md: 12 }}
         px={{ base: 4, sm: 6 }}
       >
-        <VStack gap={{ base: 6, md: 8 }} align="center">
+        <VStack align="center">
           <Box
             bg="bg.panel"
             p={{ base: 6, sm: 8 }}

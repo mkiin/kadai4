@@ -21,6 +21,7 @@
     "@tanstack/react-router": "^1.130.2",
     "@tanstack/react-router-devtools": "^1.131.5",
     "@tanstack/router-plugin": "^1.121.2",
+    "@types/jsdom": "^21.1.7",
     "next-themes": "^0.4.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -30,6 +31,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.2.4",
     "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.8.0",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.6.1",
     "@types/react": "^19.0.8",
@@ -37,11 +39,13 @@
     "@vitejs/plugin-react": "^4.3.4",
     "dotenv-cli": "^10.0.0",
     "jsdom": "^26.0.0",
+    "resize-observer-polyfill": "^1.5.1",
     "supabase": "^2.40.7",
     "typescript": "^5.7.2",
     "vite": "^6.3.5",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.0.5",
+    "vitest-axe": "^0.1.0",
     "web-vitals": "^4.2.4"
   }
 }

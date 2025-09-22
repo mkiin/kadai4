@@ -1,4 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ChakraProvider } from "@chakra-ui/react";
+import defaultSystem from "@/lib/chakraui-custom-theme";
 import type React from "react";
 
 function makeQueryClient() {
@@ -20,7 +22,7 @@ const TestProvider: React.FC<{ children: React.ReactNode }> = ({
   const queryClient = makeQueryClient();
   return (
     <QueryClientProvider client={queryClient}>
-      {children}
+      <ChakraProvider value={defaultSystem}>{children}</ChakraProvider>
     </QueryClientProvider>
   );
 };
