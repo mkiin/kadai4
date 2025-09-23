@@ -31,7 +31,10 @@ type UserRegisterFormData = {
   xId?: string;
 };
 
-export const useUserRegisterMutation = (onSuccess?: () => void) => {
+export const useUserRegisterMutation = (
+  onSuccessCallback?: () => void,
+  onErrorCalllback?: (message: string) => void,
+) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -40,10 +43,25 @@ export const useUserRegisterMutation = (onSuccess?: () => void) => {
       queryClient.invalidateQueries({
         queryKey: ["users"],
       });
-      if (onSuccess) onSuccess();
+      if (onSuccessCallback) onSuccessCallback();
     },
     onError: (error) => {
       console.error(error);
+      let errorMessage = "エラーが発生しました。";
+
+      /* PostgresError用の処理のエラーメッセージを詰める */
+      if (
+        typeof error === "object" &&
+        "code" in error &&
+        "details" in error &&
+        error.code === "23505"
+      ) {
+        errorMessage = "好きな単語が重複しています。";
+      }
+
+      if (onErrorCalllback) {
+        onErrorCalllback(errorMessage);
+      }
     },
   });
 };

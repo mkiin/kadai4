@@ -3,7 +3,6 @@ import { cleanup } from "@testing-library/react";
 import { JSDOM } from "jsdom";
 import ResizeObserver from "resize-observer-polyfill";
 import { afterEach, vi } from "vitest";
-import "vitest-axe/extend-expect";
 
 const { window } = new JSDOM();
 

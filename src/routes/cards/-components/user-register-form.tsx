@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   Button,
   createListCollection,
@@ -14,7 +15,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import { useNavigate } from "@tanstack/react-router";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useUserRegisterMutation } from "../-api/user-query";
 
@@ -56,9 +57,16 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
   const navigate = useNavigate();
 
   const { mutateAsync: createUser, isPending: creating } =
-    useUserRegisterMutation(() => {
-      navigate({ to: "/" });
-    });
+    useUserRegisterMutation(
+      () => {
+        navigate({ to: "/" });
+      },
+      (errorMessage: string) => {
+        setRegisterError(errorMessage);
+      },
+    );
+
+  const [registerError, setRegisterError] = useState<string | null>(null);
 
   const onSubmit = async (data: UserRegisterFormData) => {
     createUser(data);
@@ -78,6 +86,16 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack gap={{ base: "6", sm: "8" }}>
+        {/* エラーメッセージの表示 */}
+        {registerError && (
+          <Alert.Root status="error">
+            <Alert.Indicator />
+            <Alert.Content>
+              <Alert.Title>エラーが発生しました</Alert.Title>
+              <Alert.Description>{registerError}</Alert.Description>
+            </Alert.Content>
+          </Alert.Root>
+        )}
         {/* 基本情報セクション */}
         <Box>
           <Heading

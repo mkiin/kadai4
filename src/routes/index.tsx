@@ -23,7 +23,7 @@ export const Route = createFileRoute("/")({
   component: App,
 });
 
-export function App() {
+function App() {
   const { data: userIds } = useSuspenseQuery(userIdsQueryOptions());
 
   return (

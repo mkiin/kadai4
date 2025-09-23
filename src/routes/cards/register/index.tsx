@@ -24,7 +24,7 @@ export const Route = createFileRoute("/cards/register/")({
   ),
 });
 
-export function UserRegisterPage() {
+function UserRegisterPage() {
   const { data: skills } = useSuspenseQuery(skillsOptions());
 
   return (
@@ -53,20 +53,12 @@ export function UserRegisterPage() {
               <Box flex="1" />
             </HStack>
             <Heading
-              size={{ base: "lg", sm: "xl" }}
+              size={{ base: "2xl", sm: "3xl" }}
               mb={{ base: 2, sm: 3 }}
               lineHeight="1.2"
             >
               新規名刺登録
             </Heading>
-            <Text
-              color="fg.muted"
-              fontSize={{ base: "sm", sm: "md" }}
-              lineHeight="1.5"
-              px={{ base: 2, sm: 0 }}
-            >
-              あなたの情報を入力して、名刺を作成しましょう
-            </Text>
           </Box>
           <Box
             bg="bg.panel"
