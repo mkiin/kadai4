@@ -1,3 +1,4 @@
+// file-route-utils.tsx
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
@@ -8,13 +9,16 @@ import {
 import { type RenderOptions, render } from "@testing-library/react";
 import { routeTree } from "@/routeTree.gen";
 
-let browserQueryClient: QueryClient | undefined;
-
-function makeQueryClient() {
+/**
+ * テスト用のQueryClientを作成
+ */
+export function createTestQueryClient() {
   return new QueryClient({
     defaultOptions: {
       queries: {
         retry: false,
+        staleTime: 0,
+        gcTime: 0,
       },
       mutations: {
         retry: false,
@@ -23,15 +27,15 @@ function makeQueryClient() {
   });
 }
 
-export function getQueryClient() {
-  if (!browserQueryClient) browserQueryClient = makeQueryClient();
-  return browserQueryClient;
+interface TestProviderProps {
+  children: React.ReactNode;
+  queryClient: QueryClient;
 }
 
-const TestProvider: React.FC<{ children: React.ReactNode }> = ({
+const TestProvider: React.FC<TestProviderProps> = ({
   children,
+  queryClient,
 }) => {
-  const queryClient = getQueryClient();
   return (
     <QueryClientProvider client={queryClient}>
       <ChakraProvider value={defaultSystem}>{children}</ChakraProvider>
@@ -39,31 +43,44 @@ const TestProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
-export function createTestRouter(initialLocation = "/") {
-  const queryClient = getQueryClient();
+interface CreateTestRouterOptions {
+  initialLocation?: string;
+  queryClient?: QueryClient;
+}
+
+export function createTestRouter({
+  initialLocation = "/",
+  queryClient,
+}: CreateTestRouterOptions = {}) {
+  // queryClientが渡されない場合は新規作成
+  const client = queryClient ?? createTestQueryClient();
+
   const router = createRouter({
     routeTree,
-    context: { queryClient },
+    context: { queryClient: client },
     defaultPendingMs: 1,
     history: createMemoryHistory({
       initialEntries: [initialLocation],
     }),
     Wrap: ({ children }) => {
-      return <TestProvider>{children}</TestProvider>;
+      return <TestProvider queryClient={client}>{children}</TestProvider>;
     },
   });
+
   return router;
 }
 
 interface RenderRouterOptions extends Omit<RenderOptions, "wrapper"> {
   initialLocation?: string;
+  queryClient?: QueryClient;
 }
 
 export function renderRouter({
   initialLocation = "/",
+  queryClient,
   ...renderOptions
 }: RenderRouterOptions = {}) {
-  const router = createTestRouter(initialLocation);
+  const router = createTestRouter({ initialLocation, queryClient });
 
   const result = render(<RouterProvider router={router} />, renderOptions);
 
