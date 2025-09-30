@@ -170,9 +170,10 @@ describe("ホームページテスト", () => {
         expect(combobox).toHaveValue("sample_id");
       });
 
-      // submitボタンを探してクリック
+      // submitボタンを探してクリック（aria-hiddenを無視）
       const submitButton = await screen.findByRole("button", {
         name: "検索",
+        hidden: true,
       });
       await user.click(submitButton);
 
