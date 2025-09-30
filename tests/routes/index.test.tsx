@@ -6,6 +6,7 @@ import { createTestQueryClient, renderRouter } from "../utils/file-route-utils";
 
 const mockGetAllUserIds = vi.fn();
 const mockGetUserById = vi.fn();
+const mockGetAllSkills = vi.fn();
 
 vi.mock("@/routes/cards/-api/user-query", () => ({
   userIdsQueryOptions: () => ({
@@ -15,6 +16,13 @@ vi.mock("@/routes/cards/-api/user-query", () => ({
   userQueryOptions: (id: string) => ({
     queryKey: ["users", id],
     queryFn: () => mockGetUserById(id),
+  }),
+}));
+
+vi.mock("@/routes/cards/-api/skill-query", () => ({
+  skillsOptions: () => ({
+    queryKey: ["skills"],
+    queryFn: mockGetAllSkills,
   }),
 }));
 
@@ -28,6 +36,7 @@ describe("ホームページテスト", () => {
     // モック呼び出し回数だけをリセット
     mockGetAllUserIds.mockClear();
     mockGetUserById.mockClear();
+    mockGetAllSkills.mockClear();
 
     // デフォルトのモックデータを設定
     mockGetAllUserIds.mockResolvedValue([
@@ -44,6 +53,12 @@ describe("ホームページテスト", () => {
       x_id: null,
       user_skill: [],
     });
+
+    mockGetAllSkills.mockResolvedValue([
+      { skillId: 1, name: "React" },
+      { skillId: 2, name: "TypeScript" },
+      { skillId: 3, name: "Vitest" },
+    ]);
   });
 
   afterEach(() => {

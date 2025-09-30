@@ -6,6 +6,7 @@ import { createTestQueryClient, renderRouter } from "../utils/file-route-utils";
 
 const mockGetUserById = vi.fn();
 const mockGetAllUserIds = vi.fn();
+const mockGetAllSkills = vi.fn();
 
 vi.mock("@/routes/cards/-api/user-query", () => ({
   userQueryOptions: (id: string) => ({
@@ -15,6 +16,13 @@ vi.mock("@/routes/cards/-api/user-query", () => ({
   userIdsQueryOptions: () => ({
     queryKey: ["users"],
     queryFn: mockGetAllUserIds,
+  }),
+}));
+
+vi.mock("@/routes/cards/-api/skill-query", () => ({
+  skillsOptions: () => ({
+    queryKey: ["skills"],
+    queryFn: mockGetAllSkills,
   }),
 }));
 
@@ -28,6 +36,7 @@ describe("名刺詳細ページ(/cards/$id)テスト", () => {
     // モックをクリア
     mockGetUserById.mockClear();
     mockGetAllUserIds.mockClear();
+    mockGetAllSkills.mockClear();
 
     // デフォルトのモックデータ（全SNS情報あり）
     mockGetUserById.mockResolvedValue({
@@ -63,6 +72,13 @@ describe("名刺詳細ページ(/cards/$id)テスト", () => {
     mockGetAllUserIds.mockResolvedValue([
       { userId: "test_user" },
       { userId: "sample_id" },
+    ]);
+
+    // skillsのモックデータも設定
+    mockGetAllSkills.mockResolvedValue([
+      { skillId: 1, name: "React" },
+      { skillId: 2, name: "TypeScript" },
+      { skillId: 3, name: "Vitest" },
     ]);
   });
 
