@@ -152,7 +152,6 @@ describe("ホームページテスト", () => {
       });
 
       const user = userEvent.setup();
-      const submitButton = await screen.findByRole("button", { name: "検索" });
 
       const combobox = await screen.findByRole("combobox", {
         name: /ユーザID検索/i,
@@ -166,6 +165,7 @@ describe("ホームページテスト", () => {
       await user.click(combobox);
       await user.clear(combobox);
       await user.paste("sample_id");
+      const submitButton = await screen.findByRole("button", { name: "検索" });
 
       await vi.waitFor(() => {
         expect(combobox).toHaveValue("sample_id");
