@@ -8,6 +8,8 @@ import {
 import { type RenderOptions, render } from "@testing-library/react";
 import { routeTree } from "@/routeTree.gen";
 
+let browserQueryClient: QueryClient | undefined;
+
 function makeQueryClient() {
   return new QueryClient({
     defaultOptions: {
@@ -21,11 +23,15 @@ function makeQueryClient() {
   });
 }
 
-const queryClient = makeQueryClient();
+export function getQueryClient() {
+  if (!browserQueryClient) browserQueryClient = makeQueryClient();
+  return browserQueryClient;
+}
 
 const TestProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const queryClient = getQueryClient();
   return (
     <QueryClientProvider client={queryClient}>
       <ChakraProvider value={defaultSystem}>{children}</ChakraProvider>
@@ -34,9 +40,11 @@ const TestProvider: React.FC<{ children: React.ReactNode }> = ({
 };
 
 export function createTestRouter(initialLocation = "/") {
+  const queryClient = getQueryClient();
   const router = createRouter({
     routeTree,
     context: { queryClient },
+    defaultPendingMs: 1,
     history: createMemoryHistory({
       initialEntries: [initialLocation],
     }),

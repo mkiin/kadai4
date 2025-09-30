@@ -10,6 +10,8 @@ export const getAllUser = async () => {
   return data;
 };
 
+export type ReturnGetUserById = Awaited<ReturnType<typeof getUserById>>;
+
 /**
  * @biref IDに紐づいたユーザーデータを取得する関数
  * @param id ユーザーID
@@ -29,7 +31,6 @@ export const getUserById = async (id: string) => {
     .eq("user_id", id)
     .single();
   if (error) throw error;
-  // データを整形する
   return data;
 };
 

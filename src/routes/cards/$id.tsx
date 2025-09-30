@@ -1,4 +1,5 @@
 import { Box, Button, Center, Container, Text, VStack } from "@chakra-ui/react";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { userQueryOptions } from "./-api/user-query";
 import { UserCard } from "./-components/user-card";
@@ -16,6 +17,7 @@ export const Route = createFileRoute("/cards/$id")({
 
 function CardDetailPage() {
   const { id } = Route.useParams();
+  const { data: user } = useSuspenseQuery(userQueryOptions(id));
 
   return (
     <Box bg="bg.muted" minH="100vh">
@@ -26,7 +28,7 @@ function CardDetailPage() {
       >
         <VStack gap={{ base: 6, sm: 8 }} align="center">
           <Center width="full">
-            <UserCard id={id} />
+            <UserCard user={user} />
           </Center>
 
           <VStack

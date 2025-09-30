@@ -8,14 +8,15 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { LuExternalLink, LuGithub, LuTwitter } from "react-icons/lu";
-import { userQueryOptions } from "@/routes/cards/-api/user-query";
+import type { ReturnGetUserById } from "../-api/user";
 import { mediaUrl } from "../-lib/constants";
 
-export function UserCard({ id }: { id: string }) {
-  const { data: user } = useSuspenseQuery(userQueryOptions(id));
+type UserCardProps = {
+  user: ReturnGetUserById;
+};
 
+export function UserCard({ user }: UserCardProps) {
   return (
     <Card.Root
       width={{ base: "full", sm: "360px" }}

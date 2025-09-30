@@ -162,7 +162,7 @@ export function UserIdSearchCombobox({ userIds }: SeachUserIdProps) {
           fontSize={{ base: "md", sm: "lg" }}
           fontWeight="medium"
         >
-          名刺を見に行く
+          検索
         </Button>
       </Stack>
     </form>

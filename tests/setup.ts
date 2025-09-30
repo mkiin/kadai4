@@ -1,8 +1,7 @@
 import "@testing-library/jest-dom/vitest";
-import { cleanup } from "@testing-library/react";
 import { JSDOM } from "jsdom";
 import ResizeObserver from "resize-observer-polyfill";
-import { afterEach, vi } from "vitest";
+import { vi } from "vitest";
 
 const { window } = new JSDOM();
 
@@ -32,8 +31,4 @@ Object.defineProperty(window, "navigator", {
     },
   },
   writable: true,
-});
-
-afterEach(() => {
-  cleanup();
 });
