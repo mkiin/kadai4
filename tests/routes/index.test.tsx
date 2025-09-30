@@ -171,7 +171,7 @@ describe("ホームページテスト", () => {
       });
 
       // submitボタンを探してクリック（aria-hidden属性を無視してテキストで検索）
-      const submitButton = screen.getByText("検索");
+      const submitButton = await screen.findByRole("button", { name: "検索" });
       await user.click(submitButton);
 
       await vi.waitFor(() => {
