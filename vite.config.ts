@@ -19,11 +19,5 @@ export default defineConfig({
   },
   define: {
     "import.meta.env.TEST": JSON.stringify(process.env.NODE_ENV === "test"),
-    "import.meta.env.VITE_SUPABASE_URL": JSON.stringify(
-      process.env.VITE_SUPABASE_URL,
-    ),
-    "import.meta.env.VITE_SUPABASE_KEY": JSON.stringify(
-      process.env.VITE_SUPABASE_KEY,
-    ),
   },
 });
