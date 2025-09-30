@@ -152,6 +152,7 @@ describe("ホームページテスト", () => {
       });
 
       const user = userEvent.setup();
+      const submitButton = await screen.findByRole("button", { name: "検索" });
 
       const combobox = await screen.findByRole("combobox", {
         name: /ユーザID検索/i,
@@ -170,8 +171,6 @@ describe("ホームページテスト", () => {
         expect(combobox).toHaveValue("sample_id");
       });
 
-      // submitボタンを探してクリック（aria-hidden属性を無視してテキストで検索）
-      const submitButton = await screen.findByRole("button", { name: "検索" });
       await user.click(submitButton);
 
       await vi.waitFor(() => {
