@@ -60,7 +60,7 @@ jobs:
       - name: Setup Environment Variables
         run: |
           echo "VITE_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }}" > .env.production
-          echo "VITE_SUPABASE_ANON_KEY=${{ secrets.VITE_SUPABASE_ANON_KEY }}" >> .env.production
+          echo "VITE_SUPABASE_ANON_KEY=${{ secrets.VITE_SUPABASE_KEY }}" >> .env.production
 
 
       - name: Deploy to Firebase
