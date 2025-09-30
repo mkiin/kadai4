@@ -54,13 +54,16 @@ jobs:
         with:
           node-version: 22
           
-      - name: Install Dependencies Build
-        run : pnpm install --frozen-lockfile && pnpm run build
+      - name: Install Dependencies
+        run : pnpm install --frozen-lockfile
 
       - name: Setup Environment Variables
         run: |
           echo "VITE_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }}" > .env
-          echo "VITE_SUPABASE_ANON_KEY=${{ secrets.VITE_SUPABASE_KEY }}" >> .env
+          echo "VITE_SUPABASE_KEY=${{ secrets.VITE_SUPABASE_KEY }}" >> .env
+
+      - name: Build
+        run : pnpm run build
 
 
       - name: Deploy to Firebase
