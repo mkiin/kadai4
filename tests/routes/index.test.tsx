@@ -170,11 +170,8 @@ describe("ホームページテスト", () => {
         expect(combobox).toHaveValue("sample_id");
       });
 
-      // submitボタンを探してクリック（aria-hiddenを無視）
-      const submitButton = await screen.findByRole("button", {
-        name: "検索",
-        hidden: true,
-      });
+      // submitボタンを探してクリック（aria-hidden属性を無視してテキストで検索）
+      const submitButton = screen.getByText("検索");
       await user.click(submitButton);
 
       await vi.waitFor(() => {
