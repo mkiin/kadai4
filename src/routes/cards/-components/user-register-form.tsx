@@ -280,7 +280,7 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
                   id="githubId"
                   placeholder="あなたのGitHub ID"
                   fontSize={{ base: "16px", sm: "md" }}
-                  height={{ base: "12", sm: "auto" }}
+                  height={{ base: "12" }}
                   {...register("githubId", {
                     maxLength: {
                       value: 20,
@@ -307,7 +307,7 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
                   id="qiitaId"
                   placeholder="あなたのQiita ID"
                   fontSize={{ base: "16px", sm: "md" }}
-                  height={{ base: "12", sm: "auto" }}
+                  height={{ base: "12" }}
                   {...register("qiitaId", {
                     maxLength: {
                       value: 20,
@@ -334,7 +334,7 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
                   id="xId"
                   placeholder="あなたのx ID"
                   fontSize={{ base: "16px", sm: "md" }}
-                  height={{ base: "12", sm: "auto" }}
+                  height={{ base: "12" }}
                   {...register("xId", {
                     maxLength: {
                       value: 20,
@@ -356,7 +356,7 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
           colorPalette="blue"
           size={{ base: "lg", sm: "lg" }}
           width="full"
-          height={{ base: "14", sm: "auto" }}
+          height={{ base: "12" }}
           fontSize={{ base: "md", sm: "lg" }}
           fontWeight="medium"
           loading={isSubmitting || creating}
