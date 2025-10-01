@@ -8,7 +8,6 @@ import {
   GridItem,
   Heading,
   Input,
-  Portal,
   Select,
   Separator,
   Stack,
@@ -229,18 +228,16 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
                         <Select.Indicator />
                       </Select.IndicatorGroup>
                     </Select.Control>
-                    <Portal>
-                      <Select.Positioner>
-                        <Select.Content>
-                          {skillCollection.items.map((skill) => (
-                            <Select.Item item={skill} key={skill.skillId}>
-                              {skill.name}
-                              <Select.ItemIndicator />
-                            </Select.Item>
-                          ))}
-                        </Select.Content>
-                      </Select.Positioner>
-                    </Portal>
+                    <Select.Positioner>
+                      <Select.Content>
+                        {skillCollection.items.map((skill) => (
+                          <Select.Item item={skill} key={skill.skillId}>
+                            {skill.name}
+                            <Select.ItemIndicator />
+                          </Select.Item>
+                        ))}
+                      </Select.Content>
+                    </Select.Positioner>
                   </Select.Root>
                 )}
               />

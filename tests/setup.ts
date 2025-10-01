@@ -20,8 +20,10 @@ vi.stubGlobal("IntersectionObserver", IntersectionObserverMock);
 window.IntersectionObserver = IntersectionObserverMock;
 
 // Scroll Methods mock
-window.Element.prototype.scrollTo = () => {};
-window.Element.prototype.scrollIntoView = () => {};
+window.Element.prototype.scrollTo = vi.fn();
+window.Element.prototype.scrollIntoView = vi.fn();
+global.Element.prototype.scrollTo = vi.fn();
+global.Element.prototype.scrollIntoView = vi.fn();
 
 // navigator mock
 Object.defineProperty(window, "navigator", {

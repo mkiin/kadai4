@@ -87,6 +87,12 @@ describe("名刺登録ページ(/cards/register)テスト", () => {
       await user.click(descriptionInput);
       await user.paste("これはテスト用の自己紹介です");
 
+      // 好きな技術を選択
+      const skillTrigger = screen.getByText("技術を選択してください");
+      await user.click(skillTrigger);
+      const reactOption = await screen.findByRole("option", { name: "React" });
+      await user.click(reactOption);
+
       // 登録ボタンをクリック
       await user.click(submitButton);
 
@@ -100,7 +106,7 @@ describe("名刺登録ページ(/cards/register)テスト", () => {
         likeWord: "test_word",
         name: "テストユーザー",
         desctiption: "これはテスト用の自己紹介です",
-        skillId: "",
+        skillId: "1",
         githubId: "",
         qiitaId: "",
         xId: "",
@@ -129,7 +135,7 @@ describe("名刺登録ページ(/cards/register)テスト", () => {
       await user.paste("これはテスト用の自己紹介です");
 
       // 登録ボタンをクリック
-      const submitButton = screen.getByRole("button", { name: "登録" });
+      const submitButton = await screen.findByRole("button", { name: "登録" });
       await user.click(submitButton);
 
       // エラーメッセージが表示されることを確認
@@ -161,7 +167,7 @@ describe("名刺登録ページ(/cards/register)テスト", () => {
       await user.paste("これはテスト用の自己紹介です");
 
       // 登録ボタンをクリック
-      const submitButton = screen.getByRole("button", { name: "登録" });
+      const submitButton = await screen.findByRole("button", { name: "登録" });
       await user.click(submitButton);
 
       // エラーメッセージが表示されることを確認
@@ -193,7 +199,7 @@ describe("名刺登録ページ(/cards/register)テスト", () => {
       await user.paste("テストユーザー");
 
       // 登録ボタンをクリック
-      const submitButton = screen.getByRole("button", { name: "登録" });
+      const submitButton = await screen.findByRole("button", { name: "登録" });
       await user.click(submitButton);
 
       // エラーメッセージが表示されることを確認
@@ -231,20 +237,26 @@ describe("名刺登録ページ(/cards/register)テスト", () => {
       await user.click(descriptionInput);
       await user.paste("これはテスト用の自己紹介です");
 
+      // 好きな技術を選択
+      const skillTrigger = screen.getByText("技術を選択してください");
+      await user.click(skillTrigger);
+      const reactOption = await screen.findByRole("option", { name: "React" });
+      await user.click(reactOption);
+
       // 登録ボタンをクリック
       await user.click(submitButton);
 
-      // // 遷移を待つ
-      // await waitFor(() => {
-      //   expect(router.state.location.pathname).toBe("/");
-      // });
+      // 遷移を待つ
+      await waitFor(() => {
+        expect(router.state.location.pathname).toBe("/");
+      });
 
       // createUserが呼ばれたことを確認
       expect(mockCreateUser).toHaveBeenCalledWith({
         likeWord: "test_word",
         name: "テストユーザー",
         desctiption: "これはテスト用の自己紹介です",
-        skillId: "",
+        skillId: "1",
         githubId: "",
         qiitaId: "",
         xId: "",
