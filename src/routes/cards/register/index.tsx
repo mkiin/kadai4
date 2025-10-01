@@ -30,11 +30,11 @@ function UserRegisterPage() {
   return (
     <Box bg="bg.muted" minH="100vh">
       <Container
-        maxW="container.md"
-        py={{ base: 4, sm: 6, md: 8 }}
+        maxW={{ base: "container.md", md: "container.xl" }}
+        py={{ base: 4, sm: 6, md: 4 }}
         px={{ base: 3, sm: 4, md: 6 }}
       >
-        <VStack gap={{ base: 4, sm: 6, md: 8 }} align="stretch">
+        <VStack gap={{ base: 4, sm: 6, md: 4 }} align="stretch">
           <Box textAlign="center">
             <HStack
               justify="space-between"
@@ -53,8 +53,8 @@ function UserRegisterPage() {
               <Box flex="1" />
             </HStack>
             <Heading
-              size={{ base: "2xl", sm: "3xl" }}
-              mb={{ base: 2, sm: 3 }}
+              size={{ base: "2xl", sm: "3xl", md: "2xl" }}
+              mb={{ base: 2, sm: 3, md: 2 }}
               lineHeight="1.2"
             >
               新規名刺登録
@@ -62,10 +62,12 @@ function UserRegisterPage() {
           </Box>
           <Box
             bg="bg.panel"
-            p={{ base: 4, sm: 6, md: 8 }}
+            p={{ base: 4, sm: 6, md: 6 }}
             borderRadius="lg"
             shadow="sm"
-            mx={{ base: -1, sm: 0 }}
+            mx="auto"
+            maxW="740px"
+            width="full"
           >
             <UserRegisterForm skillsCollection={skills} />
           </Box>

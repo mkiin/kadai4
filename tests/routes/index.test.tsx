@@ -154,9 +154,7 @@ describe("ホームページテスト", () => {
       const user = userEvent.setup();
       const submitButton = await screen.findByRole("button", { name: "検索" });
 
-      const combobox = await screen.findByRole("combobox", {
-        name: /ユーザID検索/i,
-      });
+      const combobox = await screen.findByRole("combobox");
 
       expect(mockGetAllUserIds).toHaveBeenCalled();
       expect(mockGetUserById).not.toHaveBeenCalled();

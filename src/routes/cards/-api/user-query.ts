@@ -23,7 +23,7 @@ type UserRegisterFormData = {
   likeWord: string;
   name: string;
   desctiption: string;
-  skills: string[];
+  skillId: string;
   githubId?: string;
   qiitaId?: string;
   xId?: string;

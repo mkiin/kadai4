@@ -41,9 +41,10 @@ function CardDetailPage() {
               <Button
                 width="full"
                 colorPalette="teal"
-                size={{ base: "md", sm: "lg" }}
-                height={{ base: "12", sm: "auto" }}
-                fontSize={{ base: "sm", sm: "md" }}
+                size={{ base: "lg", sm: "xl" }}
+                height={{ base: "12", sm: "14" }}
+                fontSize={{ base: "lg", sm: "xl" }}
+                fontWeight="bold"
               >
                 ユーザー検索に戻る
               </Button>
@@ -52,10 +53,10 @@ function CardDetailPage() {
               <Button
                 width="full"
                 colorPalette="blue"
-                size={{ base: "md", sm: "lg" }}
-                height={{ base: "12", sm: "auto" }}
-                fontSize={{ base: "sm", sm: "md" }}
-                fontWeight="medium"
+                size={{ base: "lg", sm: "xl" }}
+                height={{ base: "12", sm: "14" }}
+                fontSize={{ base: "lg", sm: "xl" }}
+                fontWeight="bold"
               >
                 新しい名刺を登録
               </Button>

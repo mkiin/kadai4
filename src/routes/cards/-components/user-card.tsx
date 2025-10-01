@@ -1,14 +1,6 @@
-import {
-  Badge,
-  Box,
-  Card,
-  HStack,
-  IconButton,
-  Link,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
-import { LuExternalLink, LuGithub, LuTwitter } from "react-icons/lu";
+import { Box, Card, Icon, Link, Stack, Text } from "@chakra-ui/react";
+import { FaSquareGithub, FaSquareXTwitter } from "react-icons/fa6";
+import { SiQiita } from "react-icons/si";
 import type { ReturnGetUserById } from "../-api/user";
 import { mediaUrl } from "../-lib/constants";
 
@@ -19,18 +11,18 @@ type UserCardProps = {
 export function UserCard({ user }: UserCardProps) {
   return (
     <Card.Root
-      width={{ base: "full", sm: "360px" }}
-      maxW={{ base: "100%", sm: "360px" }}
+      width={{ base: "full", sm: "300px", md: "380px" }}
+      maxW={{ base: "100%", md: "380px" }}
       variant="elevated"
       shadow="md"
-      mx={{ base: 2, sm: 0 }}
+      mx="auto"
     >
       <Card.Body gap={{ base: "4", sm: "5" }} p={{ base: 4, sm: 6 }}>
         {/* ユーザー名 */}
         <Stack gap={{ base: 2, sm: 3 }}>
           <Text
-            fontSize={{ base: "xl", sm: "2xl" }}
-            fontWeight="bold"
+            fontSize={{ base: "3xl", sm: "4xl" }}
+            fontWeight="extrabold"
             color="fg"
             lineHeight="1.2"
             wordBreak="break-word"
@@ -42,8 +34,8 @@ export function UserCard({ user }: UserCardProps) {
         {/* 自己紹介 */}
         <Stack gap={{ base: 1, sm: 2 }}>
           <Text
-            fontSize={{ base: "xs", sm: "sm" }}
-            fontWeight="semibold"
+            fontSize={{ base: "md", sm: "lg" }}
+            fontWeight="bold"
             color="fg.subtle"
           >
             自己紹介
@@ -56,13 +48,14 @@ export function UserCard({ user }: UserCardProps) {
             borderLeftColor="blue.400"
           >
             <Text
-              fontSize={{ base: "xs", sm: "sm" }}
+              fontSize={{ base: "md", sm: "lg" }}
+              fontWeight="medium"
               color="fg"
               lineHeight="1.6"
               wordBreak="break-word"
-            >
-              {user.description}
-            </Text>
+              // biome-ignore lint/security/noDangerouslySetInnerHtml: <>
+              dangerouslySetInnerHTML={{ __html: user.description }}
+            />
           </Box>
         </Stack>
 
@@ -70,25 +63,21 @@ export function UserCard({ user }: UserCardProps) {
         {user.user_skill && user.user_skill.length > 0 && (
           <Stack gap={{ base: 1, sm: 2 }}>
             <Text
-              fontSize={{ base: "xs", sm: "sm" }}
-              fontWeight="semibold"
+              fontSize={{ base: "md", sm: "lg" }}
+              fontWeight="bold"
               color="fg.subtle"
             >
               好きな技術
             </Text>
-            <HStack wrap="wrap" gap={{ base: 1, sm: 2 }}>
-              {user.user_skill.map((skill) => (
-                <Badge
-                  key={skill.skills.skill_id || skill.skills.name}
-                  colorPalette="teal"
-                  variant="subtle"
-                  size={{ base: "sm", sm: "md" }}
-                  fontSize={{ base: "2xs", sm: "xs" }}
-                >
-                  {skill.skills.name || skill.skills.skill_id}
-                </Badge>
-              ))}
-            </HStack>
+            <Text
+              fontSize={{ base: "lg", sm: "xl" }}
+              fontWeight="bold"
+              color="teal.600"
+              _dark={{ color: "teal.400" }}
+            >
+              {user.user_skill[0].skills.name ||
+                user.user_skill[0].skills.skill_id}
+            </Text>
           </Stack>
         )}
       </Card.Body>
@@ -96,73 +85,51 @@ export function UserCard({ user }: UserCardProps) {
       {/* ソーシャルリンク */}
       {(user.github_id || user.qiita_id || user.x_id) && (
         <Card.Footer
-          justifyContent="center"
+          justifyContent="space-between"
           pt={{ base: 2, sm: 3 }}
           pb={{ base: 2, sm: 3 }}
           borderTop="1px solid"
           borderColor="border.muted"
+          px={{ base: 4, sm: 6 }}
         >
-          <HStack gap={{ base: 2, sm: 3 }}>
-            {user.github_id && (
-              <Link
-                href={`${mediaUrl.gitHubUrl}/${user.github_id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <IconButton
-                  variant="ghost"
-                  size={{ base: "lg", sm: "xl" }}
-                  aria-label="GitHub"
-                  color="fg"
-                  _hover={{ color: "fg", bg: "bg.subtle" }}
-                  minWidth={{ base: "48px", sm: "52px" }}
-                  height={{ base: "48px", sm: "52px" }}
-                >
-                  <LuGithub />
-                </IconButton>
-              </Link>
-            )}
+          {user.github_id && (
+            <Link
+              href={`${mediaUrl.gitHubUrl}/${user.github_id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="github"
+            >
+              <Icon fontSize="4xl" _hover={{ opacity: 0.8 }} cursor="pointer">
+                <FaSquareGithub />
+              </Icon>
+            </Link>
+          )}
 
-            {user.qiita_id && (
-              <Link
-                href={`${mediaUrl.qiitaUrl}/${user.qiita_id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <IconButton
-                  variant="ghost"
-                  size={{ base: "lg", sm: "xl" }}
-                  aria-label="Qiita"
-                  color="fg"
-                  _hover={{ color: "fg", bg: "bg.subtle" }}
-                  minWidth={{ base: "48px", sm: "52px" }}
-                  height={{ base: "48px", sm: "52px" }}
-                >
-                  <LuExternalLink />
-                </IconButton>
-              </Link>
-            )}
+          {user.qiita_id && (
+            <Link
+              href={`${mediaUrl.qiitaUrl}/${user.qiita_id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="qiita"
+            >
+              <Icon fontSize="4xl" _hover={{ opacity: 0.8 }} cursor="pointer">
+                <SiQiita />
+              </Icon>
+            </Link>
+          )}
 
-            {user.x_id && (
-              <Link
-                href={`${mediaUrl.xUrl}/${user.x_id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <IconButton
-                  variant="ghost"
-                  size={{ base: "lg", sm: "xl" }}
-                  aria-label="X (Twitter)"
-                  color="fg"
-                  _hover={{ color: "fg", bg: "bg.subtle" }}
-                  minWidth={{ base: "48px", sm: "52px" }}
-                  height={{ base: "48px", sm: "52px" }}
-                >
-                  <LuTwitter />
-                </IconButton>
-              </Link>
-            )}
-          </HStack>
+          {user.x_id && (
+            <Link
+              href={`${mediaUrl.xUrl}/${user.x_id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="twitter"
+            >
+              <Icon fontSize="4xl" _hover={{ opacity: 0.8 }} cursor="pointer">
+                <FaSquareXTwitter />
+              </Icon>
+            </Link>
+          )}
         </Card.Footer>
       )}
     </Card.Root>

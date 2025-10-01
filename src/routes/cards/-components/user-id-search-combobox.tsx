@@ -5,7 +5,6 @@ import {
   Field,
   Portal,
   Stack,
-  Text,
   useFilter,
   useListCollection,
 } from "@chakra-ui/react";
@@ -66,16 +65,6 @@ export function UserIdSearchCombobox({ userIds }: SeachUserIdProps) {
   return (
     <form onSubmit={handleSubmit}>
       <Stack gap={{ base: 4, sm: 5 }}>
-        <Box textAlign={"center"}>
-          <Text
-            fontSize={{ base: "xs", sm: "sm" }}
-            color="fg.muted"
-            mb={2}
-            lineHeight="1.4"
-          >
-            登録済みのユーザーIDを入力または選択してください
-          </Text>
-        </Box>
         <Field.Root invalid={!!error}>
           <Field.Label
             fontSize={{ base: "sm", sm: "md" }}
@@ -155,12 +144,12 @@ export function UserIdSearchCombobox({ userIds }: SeachUserIdProps) {
         </Field.Root>
         <Button
           type="submit"
-          size={{ base: "lg", sm: "lg" }}
+          size={{ base: "lg", sm: "xl" }}
           colorPalette="blue"
           width="full"
           height={{ base: "12", sm: "14" }}
-          fontSize={{ base: "md", sm: "lg" }}
-          fontWeight="medium"
+          fontSize={{ base: "lg", sm: "xl" }}
+          fontWeight="bold"
         >
           検索
         </Button>

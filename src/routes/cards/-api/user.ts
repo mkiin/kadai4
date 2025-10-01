@@ -47,7 +47,7 @@ type CreateUserData = {
   likeWord: string;
   name: string;
   desctiption: string;
-  skills: string[];
+  skillId: string;
   githubId?: string;
   qiitaId?: string;
   xId?: string;
@@ -65,16 +65,10 @@ export const createUser = async (data: CreateUserData) => {
   });
   if (userError) throw userError;
 
-  // スキルが選択されている場合のみuser_skillテーブルに挿入
-  if (data.skills.length > 0) {
-    const userSkillInserts = data.skills.map((skillId) => ({
-      user_id: data.likeWord,
-      skill_id: Number(skillId),
-    }));
-
-    const { error: skillError } = await supabase
-      .from("user_skill")
-      .insert(userSkillInserts);
-    if (skillError) throw skillError;
-  }
+  // スキルを挿入
+  const { error: skillError } = await supabase.from("user_skill").insert({
+    user_id: data.likeWord,
+    skill_id: Number(data.skillId),
+  });
+  if (skillError) throw skillError;
 };

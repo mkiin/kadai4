@@ -46,17 +46,19 @@ function App() {
             <VStack gap={{ base: 6, sm: 8 }} align="stretch">
               <Box textAlign="center">
                 <Heading
-                  size={{ base: "xl", sm: "2xl" }}
+                  size={{ base: "2xl", sm: "3xl" }}
                   mb={{ base: 3, sm: 4 }}
                   color="fg"
+                  fontWeight="extrabold"
                 >
                   名刺検索
                 </Heading>
                 <Text
                   color="fg.muted"
-                  fontSize={{ base: "sm", sm: "md" }}
+                  fontSize={{ base: "md", sm: "lg" }}
                   lineHeight="1.6"
                   mb={{ base: 4, sm: 6 }}
+                  fontWeight="semibold"
                 >
                   ユーザーIDから名刺情報を検索できます
                 </Text>
@@ -66,22 +68,22 @@ function App() {
 
               <Box textAlign="center" width="full">
                 <Text
-                  fontSize={{ base: "sm", sm: "md" }}
+                  fontSize={{ base: "md", sm: "lg" }}
                   color="fg.muted"
                   mb={{ base: 3, sm: 4 }}
-                  fontWeight="medium"
+                  fontWeight="bold"
                 >
                   または
                 </Text>
                 <Link to="/cards/register" style={{ width: "100%" }}>
                   <Button
-                    variant="subtle"
-                    colorPalette="green"
+                    // variant="subtle"
+                    colorPalette="teal"
                     size={{ base: "lg", sm: "xl" }}
                     width="full"
                     height={{ base: "12", sm: "14" }}
-                    fontSize={{ base: "md", sm: "lg" }}
-                    fontWeight="medium"
+                    fontSize={{ base: "lg", sm: "xl" }}
+                    fontWeight="bold"
                   >
                     新しい名刺を登録する
                   </Button>
