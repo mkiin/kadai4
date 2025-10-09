@@ -1,22 +1,11 @@
 {
   "mcpServers": {
-    "serena": {
-      "command": "uvx",
-      "args": [
-        "--from",
-        "git+https://github.com/oraios/serena",
-        "serena",
-        "start-mcp-server",
-        "--context",
-        "ide-assistant",
-        "--project",
-        "."
-      ],
-      "cwd": "."
-    },
-    "chakra-ui": {
+    "chrome-devtools": {
       "command": "npx",
-      "args": ["-y", "@chakra-ui/react-mcp"]
+      "args": [
+        "chrome-devtools-mcp@latest",
+        "--browserUrl=http://127.0.0.1:9222"
+      ]
     }
   }
 }
