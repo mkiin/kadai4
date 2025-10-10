@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install dependencies
+      - name: Install dependencie
         run: pnpm install
 
       - name: Delete old records
