@@ -114,7 +114,6 @@ export function UserIdSearchCombobox({ userIds }: SeachUserIdProps) {
                     <Combobox.Item
                       key={item.value}
                       item={item}
-                      _hover={{ bg: "bg.subtle" }}
                       cursor="pointer"
                       fontSize={{ base: "sm", sm: "md" }}
                       minHeight={{ base: "44px", sm: "auto" }}

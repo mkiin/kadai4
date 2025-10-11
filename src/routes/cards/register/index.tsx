@@ -45,7 +45,11 @@ function UserRegisterPage() {
                 <Button
                   variant="ghost"
                   size={{ base: "sm", sm: "md" }}
-                  colorPalette="gray"
+                  colorPalette="blue"
+                  color={{ _light: "blue.600", _dark: "blue.200" }}
+                  _hover={{
+                    bg: { _light: "blue.50", _dark: "blue.800" },
+                  }}
                 >
                   ← ホーム
                 </Button>
@@ -56,12 +60,13 @@ function UserRegisterPage() {
               size={{ base: "2xl", sm: "3xl", md: "2xl" }}
               mb={{ base: 2, sm: 3, md: 2 }}
               lineHeight="1.2"
+              color={{ _light: "gray.900", _dark: "white" }}
             >
               新規名刺登録
             </Heading>
           </Box>
           <Box
-            bg="bg.panel"
+            bg="bg.card"
             p={{ base: 4, sm: 6, md: 6 }}
             borderRadius="lg"
             shadow="sm"

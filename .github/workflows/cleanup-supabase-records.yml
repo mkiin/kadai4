@@ -31,8 +31,3 @@ jobs:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_KEY: ${{ secrets.VITE_SUPABASE_KEY }}
         run: pnpm exec tsx scripts/delete-records.ts
-
-
-
-      
-    

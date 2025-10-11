@@ -35,7 +35,7 @@ function App() {
       >
         <VStack align="center">
           <Box
-            bg="bg.panel"
+            bg="bg.card"
             p={{ base: 6, sm: 8 }}
             borderRadius="lg"
             shadow="md"

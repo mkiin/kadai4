@@ -4,8 +4,9 @@ import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { Provider as ChakraProvider } from "@/components/ui/provider";
 import { createQueryClient } from "@/lib/query-client.ts";
-// Import the generated route tree
 import { routeTree } from "./routeTree.gen";
+import "@fontsource/noto-sans-jp/500.css";
+import "./App.css";
 
 const queryClient = createQueryClient();
 

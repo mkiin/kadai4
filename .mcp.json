@@ -6,6 +6,10 @@
         "chrome-devtools-mcp@latest",
         "--browserUrl=http://127.0.0.1:9222"
       ]
+    },
+    "chakra-ui": {
+      "command": "npx",
+      "args": ["-y", "@chakra-ui/react-mcp"]
     }
   }
 }

@@ -16,6 +16,7 @@ export function UserCard({ user }: UserCardProps) {
       variant="elevated"
       shadow="md"
       mx="auto"
+      bg={"bg.card"}
     >
       <Card.Body gap={{ base: "4", sm: "5" }} p={{ base: 4, sm: 6 }}>
         {/* ユーザー名 */}
@@ -33,11 +34,7 @@ export function UserCard({ user }: UserCardProps) {
 
         {/* 自己紹介 */}
         <Stack gap={{ base: 1, sm: 2 }}>
-          <Text
-            fontSize={{ base: "md", sm: "lg" }}
-            fontWeight="bold"
-            color="fg.subtle"
-          >
+          <Text fontSize={{ base: "md", sm: "lg" }} fontWeight="bold">
             自己紹介
           </Text>
           <Box
@@ -62,11 +59,7 @@ export function UserCard({ user }: UserCardProps) {
         {/* 好きな技術 */}
         {user.user_skill && user.user_skill.length > 0 && (
           <Stack gap={{ base: 1, sm: 2 }}>
-            <Text
-              fontSize={{ base: "md", sm: "lg" }}
-              fontWeight="bold"
-              color="fg.subtle"
-            >
+            <Text fontSize={{ base: "md", sm: "lg" }} fontWeight="bold">
               好きな技術
             </Text>
             <Text

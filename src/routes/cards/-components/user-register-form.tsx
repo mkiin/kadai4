@@ -101,6 +101,7 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
             size={{ base: "sm", sm: "md" }}
             mb={{ base: 4, sm: 6, md: 3 }}
             fontSize={{ base: "lg", sm: "xl", md: "lg" }}
+            color={{ _light: "gray.900", _dark: "white" }}
           >
             基本情報
           </Heading>
@@ -222,14 +223,22 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
                     <Select.HiddenSelect />
                     <Select.Control>
                       <Select.Trigger>
-                        <Select.ValueText placeholder="技術を選択してください" />
+                        <Select.ValueText
+                          placeholder="技術を選択してください"
+                          color={{
+                            _light: "gray.400",
+                            _dark: "blue.300",
+                          }}
+                        />
                       </Select.Trigger>
                       <Select.IndicatorGroup>
                         <Select.Indicator />
                       </Select.IndicatorGroup>
                     </Select.Control>
                     <Select.Positioner>
-                      <Select.Content>
+                      <Select.Content
+                        color={{ _light: "white", _dark: "white" }}
+                      >
                         {skillCollection.items.map((skill) => (
                           <Select.Item item={skill} key={skill.skillId}>
                             {skill.name}
@@ -254,6 +263,7 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
             size={{ base: "sm", sm: "md" }}
             mb={{ base: 4, sm: 6, md: 3 }}
             fontSize={{ base: "lg", sm: "xl", md: "lg" }}
+            color={{ _light: "gray.900", _dark: "white" }}
           >
             SNSアカウント（任意）
           </Heading>
