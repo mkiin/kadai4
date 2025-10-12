@@ -20,4 +20,20 @@ export default defineConfig({
   define: {
     "import.meta.env.TEST": JSON.stringify(process.env.NODE_ENV === "test"),
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // フォントを別チャンクに分離
+          fonts: ["@fontsource/noto-sans-jp"],
+          // Reactライブラリを分離
+          react: ["react", "react-dom"],
+          // Chakra UIを分離
+          chakra: ["@chakra-ui/react", "@emotion/react"],
+          // TanStack関連を分離
+          tanstack: ["@tanstack/react-query", "@tanstack/react-router"],
+        },
+      },
+    },
+  },
 });

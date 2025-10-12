@@ -6,7 +6,6 @@ import { Provider as ChakraProvider } from "@/components/ui/provider";
 import { createQueryClient } from "@/lib/query-client.ts";
 import { routeTree } from "./routeTree.gen";
 import "@fontsource/noto-sans-jp/500.css";
-import "./App.css";
 
 const queryClient = createQueryClient();
 
