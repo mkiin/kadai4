@@ -114,7 +114,7 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
                 fontSize={{ base: "sm", sm: "md" }}
                 mb={{ base: 1, sm: 2, md: 1 }}
               >
-                好きな単語
+                好きな単語 *
               </Field.Label>
               <Input
                 id="likeWord"
@@ -144,7 +144,7 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
                 fontSize={{ base: "sm", sm: "md" }}
                 mb={{ base: 1, sm: 2, md: 1 }}
               >
-                名前
+                名前 *
               </Field.Label>
               <Input
                 id="name"
@@ -174,11 +174,11 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
                 fontSize={{ base: "sm", sm: "md" }}
                 mb={{ base: 1, sm: 2, md: 1 }}
               >
-                自己紹介
+                自己紹介 *
               </Field.Label>
               <Textarea
                 id="desctiption"
-                placeholder="僕の名前はJohn Doeです"
+                placeholder="<h1>HTMLタグも使えます。</h>"
                 resize="vertical"
                 minH={{ base: "80px", sm: "100px", md: "70px" }}
                 fontSize={{ base: "16px", sm: "md" }}

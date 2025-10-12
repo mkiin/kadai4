@@ -36,17 +36,34 @@ export function UserCard({ user }: UserCardProps) {
           <Text fontSize={{ base: "lg" }} fontWeight="bold">
             自己紹介
           </Text>
-          <Box bg="bg.muted" p={{ base: 2, sm: 3 }} borderRadius="md">
-            <Text
-              fontSize={{ base: "md" }}
-              fontWeight="medium"
-              color="fg"
-              lineHeight="1.6"
-              wordBreak="break-word"
-              // biome-ignore lint/security/noDangerouslySetInnerHtml: <>
-              dangerouslySetInnerHTML={{ __html: user.description }}
-            />
-          </Box>
+          <Box
+            bg="bg.muted"
+            p={{ base: 2, sm: 3 }}
+            borderRadius="md"
+            fontSize={{ base: "md" }}
+            lineHeight="1.6"
+            wordBreak="break-word"
+            css={{
+              "& *": {
+                all: "revert",
+                color: "inherit",
+              },
+              "& h1, & h2, & h3, & h4, & h5, & h6": {
+                fontWeight: "bold",
+                marginTop: "0.5em",
+                marginBottom: "0.5em",
+              },
+              "& h1": { fontSize: "2em" },
+              "& h2": { fontSize: "1.5em" },
+              "& h3": { fontSize: "1.17em" },
+              "& p": {
+                marginTop: "0.5em",
+                marginBottom: "0.5em",
+              },
+            }}
+            // biome-ignore lint/security/noDangerouslySetInnerHtml: <>
+            dangerouslySetInnerHTML={{ __html: user.description }}
+          />
         </Stack>
 
         {/* 好きな技術 */}
