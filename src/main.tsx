@@ -5,7 +5,8 @@ import ReactDOM from "react-dom/client";
 import { Provider as ChakraProvider } from "@/components/ui/provider";
 import { createQueryClient } from "@/lib/query-client.ts";
 import { routeTree } from "./routeTree.gen";
-import "@fontsource/noto-sans-jp/500.css";
+// 日本語のみをインポート（latin等の不要なサブセットを除外）
+import "@fontsource/noto-sans-jp/japanese-500.css";
 
 const queryClient = createQueryClient();
 

@@ -24,8 +24,6 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          // フォントを別チャンクに分離
-          fonts: ["@fontsource/noto-sans-jp"],
           // Reactライブラリを分離
           react: ["react", "react-dom"],
           // Chakra UIを分離
@@ -33,7 +31,16 @@ export default defineConfig({
           // TanStack関連を分離
           tanstack: ["@tanstack/react-query", "@tanstack/react-router"],
         },
+        // フォントファイルを別ディレクトリに出力
+        assetFileNames: (assetInfo) => {
+          const fileName = assetInfo.names?.[0] || '';
+          if (fileName.endsWith('.woff2') || fileName.endsWith('.woff')) {
+            return 'assets/fonts/[name]-[hash][extname]';
+          }
+          return 'assets/[name]-[hash][extname]';
+        },
       },
     },
+    chunkSizeWarningLimit: 600, // より厳密な閾値
   },
 });
