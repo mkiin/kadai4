@@ -184,7 +184,3 @@ pnpm run test
 pnpm run build
 firebase deploy
 ```
-
-## ライセンス
-
-このプロジェクトはMITライセンスの下で公開されています。
