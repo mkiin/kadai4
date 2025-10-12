@@ -67,17 +67,17 @@ describe("名刺登録ページ(/cards/register)テスト", () => {
       const submitButton = await screen.findByRole("button", { name: "登録" });
 
       // 好きな単語を入力
-      const likeWordInput = screen.getByLabelText("好きな単語");
+      const likeWordInput = screen.getByLabelText(/好きな単語/i);
       await user.click(likeWordInput);
       await user.paste("test_word");
 
       // 名前を入力
-      const nameInput = screen.getByLabelText("名前");
+      const nameInput = screen.getByLabelText(/名前/i);
       await user.click(nameInput);
       await user.paste("テストユーザー");
 
       // 自己紹介を入力
-      const descriptionInput = screen.getByLabelText("自己紹介");
+      const descriptionInput = screen.getByLabelText(/自己紹介/i);
       await user.click(descriptionInput);
       await user.paste("これはテスト用の自己紹介です");
 
@@ -119,12 +119,12 @@ describe("名刺登録ページ(/cards/register)テスト", () => {
       await screen.findByText("新規名刺登録");
 
       // 名前を入力
-      const nameInput = screen.getByLabelText("名前");
+      const nameInput = screen.getByLabelText(/名前/i);
       await user.click(nameInput);
       await user.paste("テストユーザー");
 
       // 自己紹介を入力
-      const descriptionInput = screen.getByLabelText("自己紹介");
+      const descriptionInput = screen.getByLabelText(/自己紹介/i);
       await user.click(descriptionInput);
       await user.paste("これはテスト用の自己紹介です");
 
@@ -151,12 +151,12 @@ describe("名刺登録ページ(/cards/register)テスト", () => {
       await screen.findByText("新規名刺登録");
 
       // 好きな単語を入力
-      const likeWordInput = screen.getByLabelText("好きな単語");
+      const likeWordInput = screen.getByLabelText(/好きな単語/i);
       await user.click(likeWordInput);
       await user.paste("test_word");
 
       // 自己紹介を入力
-      const descriptionInput = screen.getByLabelText("自己紹介");
+      const descriptionInput = screen.getByLabelText(/自己紹介/i);
       await user.click(descriptionInput);
       await user.paste("これはテスト用の自己紹介です");
 
@@ -183,12 +183,12 @@ describe("名刺登録ページ(/cards/register)テスト", () => {
       await screen.findByText("新規名刺登録");
 
       // 好きな単語を入力
-      const likeWordInput = screen.getByLabelText("好きな単語");
+      const likeWordInput = screen.getByLabelText(/好きな単語/i);
       await user.click(likeWordInput);
       await user.paste("test_word");
 
       // 名前を入力
-      const nameInput = screen.getByLabelText("名前");
+      const nameInput = screen.getByLabelText(/名前/i);
       await user.click(nameInput);
       await user.paste("テストユーザー");
 
@@ -219,15 +219,15 @@ describe("名刺登録ページ(/cards/register)テスト", () => {
       await screen.findByText("新規名刺登録");
 
       // 必須項目のみ入力
-      const likeWordInput = screen.getByLabelText("好きな単語");
+      const likeWordInput = screen.getByLabelText(/好きな単語/i);
       await user.click(likeWordInput);
       await user.paste("test_word");
 
-      const nameInput = screen.getByLabelText("名前");
+      const nameInput = screen.getByLabelText(/名前/i);
       await user.click(nameInput);
       await user.paste("テストユーザー");
 
-      const descriptionInput = screen.getByLabelText("自己紹介");
+      const descriptionInput = screen.getByLabelText(/自己紹介/i);
       await user.click(descriptionInput);
       await user.paste("これはテスト用の自己紹介です");
 
