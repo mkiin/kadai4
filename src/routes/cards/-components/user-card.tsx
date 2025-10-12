@@ -11,11 +11,10 @@ type UserCardProps = {
 export function UserCard({ user }: UserCardProps) {
   return (
     <Card.Root
-      width={{ base: "full", sm: "300px", md: "380px" }}
-      maxW={{ base: "100%", md: "380px" }}
+      width={{ base: "full" }}
+      maxWidth={{ base: "440px" }}
       variant="elevated"
       shadow="md"
-      mx="auto"
       bg={"bg.card"}
     >
       <Card.Body gap={{ base: "4", sm: "5" }} p={{ base: 4, sm: 6 }}>
@@ -34,18 +33,12 @@ export function UserCard({ user }: UserCardProps) {
 
         {/* 自己紹介 */}
         <Stack gap={{ base: 1, sm: 2 }}>
-          <Text fontSize={{ base: "md", sm: "lg" }} fontWeight="bold">
+          <Text fontSize={{ base: "lg" }} fontWeight="bold">
             自己紹介
           </Text>
-          <Box
-            bg="bg.subtle"
-            p={{ base: 2, sm: 3 }}
-            borderRadius="md"
-            borderLeft="3px solid"
-            borderLeftColor="blue.400"
-          >
+          <Box bg="bg.muted" p={{ base: 2, sm: 3 }} borderRadius="md">
             <Text
-              fontSize={{ base: "md", sm: "lg" }}
+              fontSize={{ base: "md" }}
               fontWeight="medium"
               color="fg"
               lineHeight="1.6"
@@ -59,7 +52,7 @@ export function UserCard({ user }: UserCardProps) {
         {/* 好きな技術 */}
         {user.user_skill && user.user_skill.length > 0 && (
           <Stack gap={{ base: 1, sm: 2 }}>
-            <Text fontSize={{ base: "md", sm: "lg" }} fontWeight="bold">
+            <Text fontSize={{ base: "lg" }} fontWeight="bold">
               好きな技術
             </Text>
             <Text

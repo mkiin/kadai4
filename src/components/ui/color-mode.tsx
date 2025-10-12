@@ -68,6 +68,8 @@ export const ColorModeButton = React.forwardRef<
             height: "5",
           },
         }}
+        bg={{ _light: "white", _dark: "bg.card" }}
+        shadow={"sm"}
       >
         <ColorModeIcon />
       </IconButton>

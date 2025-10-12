@@ -67,7 +67,7 @@ export function UserIdSearchCombobox({ userIds }: SeachUserIdProps) {
       <Stack gap={{ base: 4, sm: 5 }}>
         <Field.Root invalid={!!error}>
           <Field.Label
-            fontSize={{ base: "sm", sm: "md" }}
+            fontSize={{ base: "md" }}
             fontWeight="medium"
             mb={{ base: 1, sm: 2 }}
           >
@@ -144,7 +144,9 @@ export function UserIdSearchCombobox({ userIds }: SeachUserIdProps) {
         <Button
           type="submit"
           size={{ base: "lg", sm: "xl" }}
-          colorPalette="blue"
+          color={{ base: "white" }}
+          bg={{ _light: "blue.400", _dark: "blue.600" }}
+          _hover={{ bg: { _light: "blue.500", _dark: "blue.500" } }}
           width="full"
           height={{ base: "12", sm: "14" }}
           fontSize={{ base: "lg", sm: "xl" }}

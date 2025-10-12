@@ -1,6 +1,7 @@
-import { Box, Button, Center, Container, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Container, Text, VStack } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { ColorModeButton } from "@/components/ui/color-mode";
 import { userQueryOptions } from "./-api/user-query";
 import { UserCard } from "./-components/user-card";
 
@@ -20,23 +21,44 @@ function CardDetailPage() {
   const { data: user } = useSuspenseQuery(userQueryOptions(id));
 
   return (
-    <Box bg="bg.muted" minH="100vh">
-      <Container
-        maxW="container.lg"
-        py={{ base: 4, sm: 6, md: 8 }}
-        px={{ base: 3, sm: 4, md: 6 }}
+    <Box bg="bg.muted" minH="100vh" position="relative">
+      <Box
+        position="absolute"
+        top={{ base: 3 }}
+        right={{ base: 3 }}
+        zIndex="10"
       >
-        <VStack gap={{ base: 6, sm: 8 }} align="center">
-          <Center width="full">
-            <UserCard user={user} />
-          </Center>
+        <ColorModeButton variant={"subtle"} />
+      </Box>
+      <Container
+        maxW="container.md"
+        py={{ base: 6 }}
+        px={{ base: 3 }}
+        pt={{ base: 16 }}
+      >
+        <VStack gap={{ base: 8 }} align="center">
+          <UserCard user={user} />
 
           <VStack
-            gap={{ base: 2, sm: 3 }}
+            gap={{ base: 3 }}
             width="full"
-            maxW={{ base: "full", sm: "sm" }}
-            px={{ base: 2, sm: 0 }}
+            maxW={{ base: "440px" }}
+            px={{ base: 0 }}
           >
+            <Link to="/cards/register" style={{ width: "100%" }}>
+              <Button
+                width="full"
+                color={{ base: "white" }}
+                bg={{ _light: "blue.400", _dark: "blue.600" }}
+                _hover={{ bg: { _light: "blue.500", _dark: "blue.500" } }}
+                size={{ base: "lg", sm: "xl" }}
+                height={{ base: "12", sm: "14" }}
+                fontSize={{ base: "lg", sm: "xl" }}
+                fontWeight="bold"
+              >
+                新しい名刺を登録
+              </Button>
+            </Link>
             <Link to="/" style={{ width: "100%" }}>
               <Button
                 width="full"
@@ -47,18 +69,6 @@ function CardDetailPage() {
                 fontWeight="bold"
               >
                 ユーザー検索に戻る
-              </Button>
-            </Link>
-            <Link to="/cards/register" style={{ width: "100%" }}>
-              <Button
-                width="full"
-                colorPalette="blue"
-                size={{ base: "lg", sm: "xl" }}
-                height={{ base: "12", sm: "14" }}
-                fontSize={{ base: "lg", sm: "xl" }}
-                fontWeight="bold"
-              >
-                新しい名刺を登録
               </Button>
             </Link>
           </VStack>

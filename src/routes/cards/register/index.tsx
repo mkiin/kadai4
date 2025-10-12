@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { ColorModeButton } from "@/components/ui/color-mode";
 import { UserRegisterForm } from "@/routes/cards/-components/user-register-form";
 import { skillsOptions } from "../-api/skill-query";
 
@@ -31,7 +32,7 @@ function UserRegisterPage() {
     <Box bg="bg.muted" minH="100vh">
       <Container
         maxW={{ base: "container.md", md: "container.xl" }}
-        py={{ base: 4, sm: 6, md: 4 }}
+        py={{ base: 4, sm: 6, md: 6 }}
         px={{ base: 3, sm: 4, md: 6 }}
       >
         <VStack gap={{ base: 4, sm: 6, md: 4 }} align="stretch">
@@ -54,7 +55,7 @@ function UserRegisterPage() {
                   ← ホーム
                 </Button>
               </Link>
-              <Box flex="1" />
+              <ColorModeButton />
             </HStack>
             <Heading
               size={{ base: "2xl", sm: "3xl", md: "2xl" }}

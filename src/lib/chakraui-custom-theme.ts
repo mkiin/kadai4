@@ -29,7 +29,7 @@ const config = defineConfig({
             value: { _light: "{colors.gray.900}", _dark: "{colors.gray.100}" },
           },
           muted: {
-            value: { _light: "{colors.gray.600}", _dark: "{colors.blue.300}" },
+            value: { _light: "{colors.gray.600}", _dark: "{colors.gray.300}" },
           },
         },
       },
@@ -126,7 +126,7 @@ const config = defineConfig({
                 _placeholder: {
                   color: {
                     _light: "gray.400",
-                    _dark: "gray.500",
+                    _dark: "blue.300",
                   },
                 },
               },

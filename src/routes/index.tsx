@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { ColorModeButton } from "@/components/ui/color-mode";
 import { userIdsQueryOptions } from "./cards/-api/user-query";
 import { UserIdSearchCombobox } from "./cards/-components/user-id-search-combobox";
 
@@ -27,11 +28,20 @@ function App() {
   const { data: userIds } = useSuspenseQuery(userIdsQueryOptions());
 
   return (
-    <Box bg="bg.muted" minH="100vh">
+    <Box bg="bg.muted" minH="100vh" position="relative">
+      <Box
+        position="absolute"
+        top={{ base: 3 }}
+        right={{ base: 3 }}
+        zIndex="10"
+      >
+        <ColorModeButton variant={"subtle"} />
+      </Box>
       <Container
         maxW="container.md"
-        py={{ base: 6, md: 12 }}
-        px={{ base: 4, sm: 6 }}
+        py={{ base: 6 }}
+        px={{ base: 3 }}
+        pt={{ base: 16 }}
       >
         <VStack align="center">
           <Box
@@ -39,14 +49,14 @@ function App() {
             p={{ base: 6, sm: 8 }}
             borderRadius="lg"
             shadow="md"
-            mx={{ base: -2, sm: 0 }}
+            mx={{ base: 0, sm: 0 }}
             width="full"
-            maxW={{ base: "full", sm: "480px" }}
+            maxW={{ base: "440px" }}
           >
             <VStack gap={{ base: 6, sm: 8 }} align="stretch">
               <Box textAlign="center">
                 <Heading
-                  size={{ base: "2xl", sm: "3xl" }}
+                  size={{ base: "3xl" }}
                   mb={{ base: 3, sm: 4 }}
                   color="fg"
                   fontWeight="extrabold"
