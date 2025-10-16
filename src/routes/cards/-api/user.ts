@@ -21,7 +21,7 @@ export const getUserById = async (id: string) => {
   const { data, error } = await supabase
     .from("users")
     .select(`*,
-      user_skill!inner (
+      user_skill (
         skills (
           skill_id,
           name

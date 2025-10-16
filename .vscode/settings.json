@@ -37,5 +37,8 @@
     "source.organizeImports.biome": "always"
   },
   "editor.defaultFormatter": "biomejs.biome",
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "github-actions.workflows.pinned.workflows": [
+    ".github/workflows/firebase-hosting-pull-request.yml"
+  ]
 }
