@@ -3,7 +3,7 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import { createUser, getAllUserIds, getUserById } from "./user";
+import { createUser, getAllUsers, getUserById } from "./user";
 
 export const userQueryOptions = (id: string) => {
   return queryOptions({
@@ -12,15 +12,14 @@ export const userQueryOptions = (id: string) => {
   });
 };
 
-export const userIdsQueryOptions = () => {
+export const getAllUsersOption = () => {
   return queryOptions({
     queryKey: ["users"],
-    queryFn: getAllUserIds,
+    queryFn: getAllUsers,
   });
 };
 
 type UserRegisterFormData = {
-  likeWord: string;
   name: string;
   desctiption: string;
   skillId: string;

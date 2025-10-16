@@ -62,7 +62,9 @@ function CardDetailPage() {
             <Link to="/" style={{ width: "100%" }}>
               <Button
                 width="full"
-                colorPalette="teal"
+                color={{ _light: "bg", _dark: "fg.muted" }}
+                bg={{ _light: "teal.400", _dark: "teal.600" }}
+                _hover={{ bg: { _light: "teal.500", _dark: "teal.500" } }}
                 size={{ base: "lg", sm: "xl" }}
                 height={{ base: "12", sm: "14" }}
                 fontSize={{ base: "lg", sm: "xl" }}

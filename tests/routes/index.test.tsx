@@ -2,16 +2,17 @@ import type { QueryClient } from "@tanstack/react-query";
 import { screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
+import { mockSkills, mockUsers, mockUsersList } from "../mocks";
 import { createTestQueryClient, renderRouter } from "../utils/file-route-utils";
 
-const mockGetAllUserIds = vi.fn();
+const mockGetAllUsers = vi.fn();
 const mockGetUserById = vi.fn();
 const mockGetAllSkills = vi.fn();
 
 vi.mock("@/routes/cards/-api/user-query", () => ({
-  userIdsQueryOptions: () => ({
+  getAllUsersOption: () => ({
     queryKey: ["users"],
-    queryFn: mockGetAllUserIds,
+    queryFn: mockGetAllUsers,
   }),
   userQueryOptions: (id: string) => ({
     queryKey: ["users", id],
@@ -34,31 +35,16 @@ describe("ホームページテスト", () => {
     queryClient = createTestQueryClient();
 
     // モック呼び出し回数だけをリセット
-    mockGetAllUserIds.mockClear();
+    mockGetAllUsers.mockClear();
     mockGetUserById.mockClear();
     mockGetAllSkills.mockClear();
 
     // デフォルトのモックデータを設定
-    mockGetAllUserIds.mockResolvedValue([
-      { userId: "apple" },
-      { userId: "sample_id" },
-    ]);
+    mockGetAllUsers.mockResolvedValue(mockUsersList);
 
-    mockGetUserById.mockResolvedValue({
-      user_id: "sample_id",
-      name: "Sample User",
-      description: "Test description",
-      github_id: null,
-      qiita_id: null,
-      x_id: null,
-      user_skill: [],
-    });
+    mockGetUserById.mockResolvedValue(mockUsers.noSocialMedia);
 
-    mockGetAllSkills.mockResolvedValue([
-      { skillId: 1, name: "React" },
-      { skillId: 2, name: "TypeScript" },
-      { skillId: 3, name: "Vitest" },
-    ]);
+    mockGetAllSkills.mockResolvedValue(mockSkills);
   });
 
   afterEach(() => {
@@ -74,17 +60,14 @@ describe("ホームページテスト", () => {
       });
 
       expect(await screen.findByText("名刺検索")).toBeInTheDocument();
-      expect(mockGetAllUserIds).toHaveBeenCalled();
+      expect(mockGetAllUsers).toHaveBeenCalled();
     });
 
     test("ペンディングコンポーネントが表示される", async () => {
-      mockGetAllUserIds.mockImplementationOnce(
+      mockGetAllUsers.mockImplementationOnce(
         () =>
           new Promise((resolve) =>
-            setTimeout(
-              () => resolve([{ userId: "apple" }, { userId: "sample_id" }]),
-              100,
-            ),
+            setTimeout(() => resolve(mockUsersList), 100),
           ),
       );
 
@@ -99,8 +82,8 @@ describe("ホームページテスト", () => {
     });
   });
 
-  describe("ID検索フォームテスト", () => {
-    test("IDを入力せず検索ボタンを押すとユーザーIDを入力してください。と表示される", async () => {
+  describe("名前検索フォームテスト", () => {
+    test("名前を入力せず検索ボタンを押すとユーザー名を入力してください。と表示される", async () => {
       renderRouter({
         initialLocation: "/",
         queryClient,
@@ -114,11 +97,11 @@ describe("ホームページテスト", () => {
       await user.click(submitButton);
 
       expect(
-        await screen.findByText("ユーザーIDを入力してください"),
+        await screen.findByText("ユーザー名を入力してください"),
       ).toBeInTheDocument();
     });
 
-    test("存在しないIDを入力して検索ボタンを押すと「存在しないユーザーIDです」と表示される", async () => {
+    test("存在しない名前を入力して検索ボタンを押すと「存在しないユーザー名です」と表示される", async () => {
       renderRouter({
         initialLocation: "/",
         queryClient,
@@ -127,25 +110,25 @@ describe("ホームページテスト", () => {
       const user = userEvent.setup();
 
       const combobox = await screen.findByRole("combobox", {
-        name: /ユーザID検索/i,
+        name: /ユーザー名検索/i,
       });
       await user.click(combobox);
       await user.clear(combobox);
-      await user.paste("ダミーID");
+      await user.paste("存在しない名前");
 
       await vi.waitFor(() => {
-        expect(combobox).toHaveValue("ダミーID");
+        expect(combobox).toHaveValue("存在しない名前");
       });
 
       const submitButton = screen.getByText("検索");
       await user.click(submitButton);
 
       expect(
-        await screen.findByText("存在しないユーザーIDです"),
+        await screen.findByText("存在しないユーザー名です"),
       ).toBeInTheDocument();
     });
 
-    test("存在するID「sample_id」を入力して、検索ボタンを押すと /cards/sample_idへ遷移する", async () => {
+    test(`存在する名前「${mockUsers.noSocialMedia.name}」を入力して、検索ボタンを押すと /cards/2へ遷移する`, async () => {
       const { router } = renderRouter({
         initialLocation: "/",
         queryClient,
@@ -156,31 +139,31 @@ describe("ホームページテスト", () => {
 
       const combobox = await screen.findByRole("combobox");
 
-      expect(mockGetAllUserIds).toHaveBeenCalled();
+      expect(mockGetAllUsers).toHaveBeenCalled();
       expect(mockGetUserById).not.toHaveBeenCalled();
 
       const callCountBefore = mockGetUserById.mock.calls.length;
 
       await user.click(combobox);
       await user.clear(combobox);
-      await user.paste("sample_id");
+      await user.paste(mockUsers.noSocialMedia.name);
 
       await vi.waitFor(() => {
-        expect(combobox).toHaveValue("sample_id");
+        expect(combobox).toHaveValue(mockUsers.noSocialMedia.name);
       });
 
       await user.click(submitButton);
 
       await vi.waitFor(() => {
-        expect(router.state.location.pathname).toBe("/cards/sample_id");
+        expect(router.state.location.pathname).toBe("/cards/2");
       });
 
-      expect(mockGetUserById).toHaveBeenCalledWith("sample_id");
+      expect(mockGetUserById).toHaveBeenCalledWith("2");
       expect(mockGetUserById.mock.calls.length).toBeGreaterThan(
         callCountBefore,
       );
 
-      expect(await screen.findByText("Sample User")).toBeInTheDocument();
+      expect(await screen.findByText(mockUsers.noSocialMedia.name)).toBeInTheDocument();
     });
   });
 

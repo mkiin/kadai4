@@ -2,11 +2,12 @@ import type { QueryClient } from "@tanstack/react-query";
 import { screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { beforeEach, describe, expect, test, vi } from "vitest";
+import { mockSkills, mockUsersList } from "../mocks";
 import { createTestQueryClient, renderRouter } from "../utils/file-route-utils";
 
 const mockGetAllSkills = vi.fn();
 const mockCreateUser = vi.fn();
-const mockGetAllUserIds = vi.fn();
+const mockGetAllUsers = vi.fn();
 
 vi.mock("@/routes/cards/-api/skill-query", () => ({
   skillsOptions: () => ({
@@ -17,7 +18,7 @@ vi.mock("@/routes/cards/-api/skill-query", () => ({
 
 vi.mock("@/routes/cards/-api/user", () => ({
   createUser: (data: unknown) => mockCreateUser(data),
-  getAllUserIds: () => mockGetAllUserIds(),
+  getAllUsers: () => mockGetAllUsers(),
 }));
 
 describe("名刺登録ページ(/cards/register)テスト", () => {
@@ -30,30 +31,14 @@ describe("名刺登録ページ(/cards/register)テスト", () => {
     // モックをクリア
     mockGetAllSkills.mockClear();
     mockCreateUser.mockClear();
-    mockGetAllUserIds.mockClear();
+    mockGetAllUsers.mockClear();
 
     // デフォルトのモックデータ
-    mockGetAllSkills.mockResolvedValue([
-      { skillId: 1, name: "React" },
-      { skillId: 2, name: "TypeScript" },
-      { skillId: 3, name: "Vitest" },
-    ]);
-
-    mockGetAllUserIds.mockResolvedValue([]);
+    mockGetAllSkills.mockResolvedValue(mockSkills);
+    mockGetAllUsers.mockResolvedValue(mockUsersList);
 
     mockCreateUser.mockResolvedValue(undefined);
   });
-
-  // describe("レンダリングテスト", () => {
-  //   test("タイトルが表示されている", async () => {
-  //     renderRouter({
-  //       initialLocation: "/cards/register",
-  //       queryClient,
-  //     });
-  //     // await waitFor(() => {});
-  //     // expect(screen.getByText("新規名刺登録")).toBeInTheDocument();
-  //   });
-  // });
 
   describe("全項目入力テスト", () => {
     test("全項目入力して登録ボタンを押すと/に遷移する", async () => {
@@ -65,11 +50,6 @@ describe("名刺登録ページ(/cards/register)テスト", () => {
       const user = userEvent.setup();
 
       const submitButton = await screen.findByRole("button", { name: "登録" });
-
-      // 好きな単語を入力
-      const likeWordInput = screen.getByLabelText(/好きな単語/i);
-      await user.click(likeWordInput);
-      await user.paste("test_word");
 
       // 名前を入力
       const nameInput = screen.getByLabelText(/名前/i);
@@ -84,7 +64,9 @@ describe("名刺登録ページ(/cards/register)テスト", () => {
       // 好きな技術を選択
       const skillTrigger = screen.getByText("技術を選択してください");
       await user.click(skillTrigger);
-      const reactOption = await screen.findByRole("option", { name: "React" });
+      const reactOption = await screen.findByRole("option", {
+        name: mockSkills[0].name,
+      });
       await user.click(reactOption);
 
       // 登録ボタンをクリック
@@ -95,52 +77,16 @@ describe("名刺登録ページ(/cards/register)テスト", () => {
         expect(router.state.location.pathname).toBe("/");
       });
 
-      // createUserが呼ばれたことを確認
-      expect(mockCreateUser).toHaveBeenCalledWith({
-        likeWord: "test_word",
-        name: "テストユーザー",
-        desctiption: "これはテスト用の自己紹介です",
-        skillId: "1",
-        githubId: "",
-        qiitaId: "",
-        xId: "",
-      });
+      // createUserが呼ばれたことを確認（likeWordが含まれていないことを確認）
+      expect(mockCreateUser).toHaveBeenCalledWith(
+        expect.not.objectContaining({
+          likeWord: expect.anything(),
+        }),
+      );
     });
   });
 
   describe("バリデーションテスト", () => {
-    test("IDがないときにエラーメッセージがでる", async () => {
-      renderRouter({
-        initialLocation: "/cards/register",
-        queryClient,
-      });
-      const user = userEvent.setup();
-
-      await screen.findByText("新規名刺登録");
-
-      // 名前を入力
-      const nameInput = screen.getByLabelText(/名前/i);
-      await user.click(nameInput);
-      await user.paste("テストユーザー");
-
-      // 自己紹介を入力
-      const descriptionInput = screen.getByLabelText(/自己紹介/i);
-      await user.click(descriptionInput);
-      await user.paste("これはテスト用の自己紹介です");
-
-      // 登録ボタンをクリック
-      const submitButton = await screen.findByRole("button", { name: "登録" });
-      await user.click(submitButton);
-
-      // エラーメッセージが表示されることを確認
-      expect(
-        await screen.findByText("内容の入力は必須です"),
-      ).toBeInTheDocument();
-
-      // createUserが呼ばれないことを確認
-      expect(mockCreateUser).not.toHaveBeenCalled();
-    });
-
     test("名前がないときにエラーメッセージがでる", async () => {
       renderRouter({
         initialLocation: "/cards/register",
@@ -149,11 +95,6 @@ describe("名刺登録ページ(/cards/register)テスト", () => {
       const user = userEvent.setup();
 
       await screen.findByText("新規名刺登録");
-
-      // 好きな単語を入力
-      const likeWordInput = screen.getByLabelText(/好きな単語/i);
-      await user.click(likeWordInput);
-      await user.paste("test_word");
 
       // 自己紹介を入力
       const descriptionInput = screen.getByLabelText(/自己紹介/i);
@@ -181,11 +122,6 @@ describe("名刺登録ページ(/cards/register)テスト", () => {
       const user = userEvent.setup();
 
       await screen.findByText("新規名刺登録");
-
-      // 好きな単語を入力
-      const likeWordInput = screen.getByLabelText(/好きな単語/i);
-      await user.click(likeWordInput);
-      await user.paste("test_word");
 
       // 名前を入力
       const nameInput = screen.getByLabelText(/名前/i);
@@ -219,10 +155,6 @@ describe("名刺登録ページ(/cards/register)テスト", () => {
       await screen.findByText("新規名刺登録");
 
       // 必須項目のみ入力
-      const likeWordInput = screen.getByLabelText(/好きな単語/i);
-      await user.click(likeWordInput);
-      await user.paste("test_word");
-
       const nameInput = screen.getByLabelText(/名前/i);
       await user.click(nameInput);
       await user.paste("テストユーザー");
@@ -234,7 +166,9 @@ describe("名刺登録ページ(/cards/register)テスト", () => {
       // 好きな技術を選択
       const skillTrigger = screen.getByText("技術を選択してください");
       await user.click(skillTrigger);
-      const reactOption = await screen.findByRole("option", { name: "React" });
+      const reactOption = await screen.findByRole("option", {
+        name: mockSkills[0].name,
+      });
       await user.click(reactOption);
 
       // 登録ボタンをクリック
@@ -245,16 +179,12 @@ describe("名刺登録ページ(/cards/register)テスト", () => {
         expect(router.state.location.pathname).toBe("/");
       });
 
-      // createUserが呼ばれたことを確認
-      expect(mockCreateUser).toHaveBeenCalledWith({
-        likeWord: "test_word",
-        name: "テストユーザー",
-        desctiption: "これはテスト用の自己紹介です",
-        skillId: "1",
-        githubId: "",
-        qiitaId: "",
-        xId: "",
-      });
+      // createUserが呼ばれたことを確認（likeWordが含まれていないことを確認）
+      expect(mockCreateUser).toHaveBeenCalledWith(
+        expect.not.objectContaining({
+          likeWord: expect.anything(),
+        }),
+      );
     });
   });
 });

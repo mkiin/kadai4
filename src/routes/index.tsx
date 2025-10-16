@@ -9,12 +9,12 @@ import {
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ColorModeButton } from "@/components/ui/color-mode";
-import { userIdsQueryOptions } from "./cards/-api/user-query";
-import { UserIdSearchCombobox } from "./cards/-components/user-id-search-combobox";
+import { getAllUsersOption } from "./cards/-api/user-query";
+import { UserNameSearchCombobox } from "./cards/-components/user-name-search-combobox";
 
 export const Route = createFileRoute("/")({
   loader: ({ context }) => {
-    context.queryClient.ensureQueryData(userIdsQueryOptions());
+    context.queryClient.ensureQueryData(getAllUsersOption());
   },
   pendingComponent: () => (
     <Container maxW="container.md" centerContent py="10">
@@ -25,7 +25,7 @@ export const Route = createFileRoute("/")({
 });
 
 function App() {
-  const { data: userIds } = useSuspenseQuery(userIdsQueryOptions());
+  const { data: allUsers } = useSuspenseQuery(getAllUsersOption());
 
   return (
     <Box bg="bg.muted" minH="100vh" position="relative">
@@ -70,11 +70,11 @@ function App() {
                   mb={{ base: 4, sm: 6 }}
                   fontWeight="semibold"
                 >
-                  ユーザーIDから名刺情報を検索できます
+                  名前から名刺情報を検索できます
                 </Text>
               </Box>
 
-              <UserIdSearchCombobox userIds={userIds} />
+              <UserNameSearchCombobox allUsers={allUsers} />
 
               <Box textAlign="center" width="full">
                 <Text
@@ -87,13 +87,14 @@ function App() {
                 </Text>
                 <Link to="/cards/register" style={{ width: "100%" }}>
                   <Button
-                    // variant="subtle"
-                    colorPalette="teal"
                     size={{ base: "lg", sm: "xl" }}
                     width="full"
                     height={{ base: "12", sm: "14" }}
                     fontSize={{ base: "lg", sm: "xl" }}
                     fontWeight="bold"
+                    color={{ _light: "bg", _dark: "fg.muted" }}
+                    bg={{ _light: "teal.400", _dark: "teal.600" }}
+                    _hover={{ bg: { _light: "teal.500", _dark: "teal.500" } }}
                   >
                     新しい名刺を登録する
                   </Button>

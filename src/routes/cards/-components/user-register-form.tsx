@@ -19,7 +19,6 @@ import { Controller, useForm } from "react-hook-form";
 import { useUserRegisterMutation } from "../-api/user-query";
 
 type UserRegisterFormData = {
-  likeWord: string;
   name: string;
   desctiption: string;
   skillId: string;
@@ -46,7 +45,6 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
   } = useForm<UserRegisterFormData>({
     mode: "onChange",
     defaultValues: {
-      likeWord: "",
       name: "",
       desctiption: "",
       skillId: "",
@@ -106,36 +104,6 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
             基本情報
           </Heading>
           <Stack gap={{ base: "4", sm: "6", md: "3" }}>
-            {/* すきな単語 */}
-            <Field.Root invalid={!!errors.likeWord}>
-              <Field.Label
-                htmlFor={"likeWord"}
-                fontWeight="medium"
-                fontSize={{ base: "sm", sm: "md" }}
-                mb={{ base: 1, sm: 2, md: 1 }}
-              >
-                好きな単語 *
-              </Field.Label>
-              <Input
-                id="likeWord"
-                placeholder="Apple"
-                fontSize={{ base: "16px", sm: "md" }}
-                height={{ base: "12", md: "10" }}
-                {...register("likeWord", {
-                  required: "内容の入力は必須です",
-                  minLength: {
-                    value: 1,
-                    message: "1文字以上入力してください",
-                  },
-                  maxLength: {
-                    value: 20,
-                    message: "20文字以下で入力してください",
-                  },
-                })}
-              />
-              <Field.ErrorText>{errors.likeWord?.message}</Field.ErrorText>
-            </Field.Root>
-
             {/* お名前 */}
             <Field.Root invalid={!!errors.name}>
               <Field.Label
@@ -149,6 +117,7 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
               <Input
                 id="name"
                 placeholder="John Doe"
+                autoComplete="off"
                 fontSize={{ base: "16px", sm: "md" }}
                 height={{ base: "12", md: "10" }}
                 {...register("name", {
@@ -179,6 +148,7 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
               <Textarea
                 id="desctiption"
                 placeholder="<h1>HTMLタグも使えます。</h>"
+                autoComplete="off"
                 resize="vertical"
                 minH={{ base: "80px", sm: "100px", md: "70px" }}
                 fontSize={{ base: "16px", sm: "md" }}
@@ -289,6 +259,7 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
                 <Input
                   id="githubId"
                   placeholder="あなたのGitHub ID"
+                  autoComplete="off"
                   fontSize={{ base: "16px", sm: "md" }}
                   height={{ base: "12", md: "10" }}
                   {...register("githubId", {
@@ -316,6 +287,7 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
                 <Input
                   id="qiitaId"
                   placeholder="あなたのQiita ID"
+                  autoComplete="off"
                   fontSize={{ base: "16px", sm: "md" }}
                   height={{ base: "12", md: "10" }}
                   {...register("qiitaId", {
@@ -343,6 +315,7 @@ export function UserRegisterForm({ skillsCollection }: UserRegisterFormProps) {
                 <Input
                   id="xId"
                   placeholder="あなたのx ID"
+                  autoComplete="off"
                   fontSize={{ base: "16px", sm: "md" }}
                   height={{ base: "12", md: "10" }}
                   {...register("xId", {

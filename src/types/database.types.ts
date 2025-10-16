@@ -16,17 +16,17 @@ export type Database = {
     Tables: {
       skills: {
         Row: {
-          created_at: string;
+          created_at: string | null;
           name: string;
           skill_id: number;
         };
         Insert: {
-          created_at?: string;
+          created_at?: string | null;
           name: string;
           skill_id?: number;
         };
         Update: {
-          created_at?: string;
+          created_at?: string | null;
           name?: string;
           skill_id?: number;
         };
@@ -34,22 +34,22 @@ export type Database = {
       };
       user_skill: {
         Row: {
-          created_at: string;
+          created_at: string | null;
           id: number;
           skill_id: number;
-          user_id: string;
+          user_id: number;
         };
         Insert: {
-          created_at?: string;
+          created_at?: string | null;
           id?: number;
           skill_id: number;
-          user_id: string;
+          user_id: number;
         };
         Update: {
-          created_at?: string;
+          created_at?: string | null;
           id?: number;
           skill_id?: number;
-          user_id?: string;
+          user_id?: number;
         };
         Relationships: [
           {
@@ -75,7 +75,7 @@ export type Database = {
           github_id: string | null;
           name: string;
           qiita_id: string | null;
-          user_id: string;
+          user_id: number;
           x_id: string | null;
         };
         Insert: {
@@ -84,7 +84,7 @@ export type Database = {
           github_id?: string | null;
           name: string;
           qiita_id?: string | null;
-          user_id: string;
+          user_id?: number;
           x_id?: string | null;
         };
         Update: {
@@ -93,7 +93,7 @@ export type Database = {
           github_id?: string | null;
           name?: string;
           qiita_id?: string | null;
-          user_id?: string;
+          user_id?: number;
           x_id?: string | null;
         };
         Relationships: [];

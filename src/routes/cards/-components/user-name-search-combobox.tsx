@@ -11,27 +11,30 @@ import {
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 
-type SeachUserIdProps = {
-  userIds: Array<{ userId: string }>;
+type SearchUserNameProps = {
+  allUsers: Array<{ user_id: number; name: string }>;
 };
 
-export function UserIdSearchCombobox({ userIds }: SeachUserIdProps) {
+export function UserNameSearchCombobox({ allUsers }: SearchUserNameProps) {
   const navigate = useNavigate();
   const [error, setError] = useState<string>("");
   const [currentValue, setCurrentValue] = useState<string>(""); // 現在の値を管理
 
   const { contains } = useFilter({ sensitivity: "base" });
   const { collection, filter } = useListCollection({
-    initialItems: userIds.map((id) => ({ label: id.userId, value: id.userId })),
+    initialItems: allUsers.map((user) => ({
+      label: user.name,
+      value: user.name,
+    })),
     filter: contains,
   });
 
-  const validateUserId = (value: string) => {
+  const validateUserName = (value: string) => {
     if (!value || value.trim() === "") {
-      return "ユーザーIDを入力してください";
+      return "ユーザー名を入力してください";
     }
-    if (!userIds.some((user) => user.userId === value)) {
-      return "存在しないユーザーIDです";
+    if (!allUsers.some((user) => user.name === value)) {
+      return "存在しないユーザー名です";
     }
     return null;
   };
@@ -39,14 +42,21 @@ export function UserIdSearchCombobox({ userIds }: SeachUserIdProps) {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const validationError = validateUserId(currentValue);
+    const validationError = validateUserName(currentValue);
     if (validationError) {
       setError(validationError);
       return;
     }
 
+    // nameからuser_idを取得して遷移
+    const selectedUser = allUsers.find((user) => user.name === currentValue);
+    if (!selectedUser) {
+      setError("ユーザー情報が見つかりません");
+      return;
+    }
+
     setError("");
-    navigate({ to: `/cards/${currentValue}` });
+    navigate({ to: `/cards/${String(selectedUser.user_id)}` });
   };
 
   const handleInputChange = (details: Combobox.InputValueChangeDetails) => {
@@ -71,18 +81,18 @@ export function UserIdSearchCombobox({ userIds }: SeachUserIdProps) {
             fontWeight="medium"
             mb={{ base: 1, sm: 2 }}
           >
-            ユーザID検索
+            ユーザー名検索
           </Field.Label>
           <Combobox.Root
             collection={collection}
             onInputValueChange={handleInputChange}
-            onValueChange={handleValueChange} // 重要：選択時の処理を追加
+            onValueChange={handleValueChange} // 重要:選択時の処理を追加
             allowCustomValue={true}
             selectionBehavior="replace" // 選択時に入力フィールドを更新
           >
             <Combobox.Control>
               <Combobox.Input
-                placeholder="ユーザーIDを入力してください"
+                placeholder="ユーザー名を入力してください"
                 fontSize={{ base: "16px", sm: "md" }}
                 height={{ base: "12", sm: "auto" }}
               />
@@ -107,7 +117,7 @@ export function UserIdSearchCombobox({ userIds }: SeachUserIdProps) {
                       color="fg.muted"
                       fontSize={{ base: "xs", sm: "sm" }}
                     >
-                      該当するユーザーIDが見つかりません
+                      該当するユーザー名が見つかりません
                     </Box>
                   </Combobox.Empty>
                   {collection.items.map((item) => (
